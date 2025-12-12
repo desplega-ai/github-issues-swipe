@@ -1,15 +1,18 @@
 import { Octokit } from '@octokit/rest';
 import type { GitHubIssue } from '@/types';
 
-const octokit = new Octokit({
-  auth: process.env.NEXT_PUBLIC_GITHUB_TOKEN,
-});
+function getOctokit(token: string) {
+  return new Octokit({
+    auth: token,
+  });
+}
 
 /**
  * Fetches all open issues across all repositories for the authenticated user
  */
-export async function fetchUserIssues(): Promise<GitHubIssue[]> {
+export async function fetchUserIssues(token: string): Promise<GitHubIssue[]> {
   try {
+    const octokit = getOctokit(token);
     const response = await octokit.rest.issues.listForAuthenticatedUser({
       filter: 'all',
       state: 'open',
@@ -28,18 +31,16 @@ export async function fetchUserIssues(): Promise<GitHubIssue[]> {
 /**
  * Assigns an issue to the authenticated user
  */
-export async function assignIssueToMe(owner: string, repo: string, issueNumber: number): Promise<void> {
+export async function assignIssueToMe(token: string, owner: string, repo: string, issueNumber: number): Promise<void> {
   try {
-    const username = process.env.NEXT_PUBLIC_GITHUB_USERNAME;
-    if (!username) {
-      throw new Error('NEXT_PUBLIC_GITHUB_USERNAME not set');
-    }
+    const octokit = getOctokit(token);
+    const { data: { login } } = await octokit.rest.users.getAuthenticated();
 
     await octokit.rest.issues.addAssignees({
       owner,
       repo,
       issue_number: issueNumber,
-      assignees: [username],
+      assignees: [login],
     });
   } catch (error) {
     console.error('Error assigning issue:', error);
@@ -50,8 +51,9 @@ export async function assignIssueToMe(owner: string, repo: string, issueNumber: 
 /**
  * Closes an issue with the "wontfix" label
  */
-export async function closeIssueWithWontfix(owner: string, repo: string, issueNumber: number): Promise<void> {
+export async function closeIssueWithWontfix(token: string, owner: string, repo: string, issueNumber: number): Promise<void> {
   try {
+    const octokit = getOctokit(token);
     // Add wontfix label
     await octokit.rest.issues.addLabels({
       owner,
@@ -76,8 +78,9 @@ export async function closeIssueWithWontfix(owner: string, repo: string, issueNu
 /**
  * Adds a "later" label to an issue (for swipe left)
  */
-export async function markIssueForLater(owner: string, repo: string, issueNumber: number): Promise<void> {
+export async function markIssueForLater(token: string, owner: string, repo: string, issueNumber: number): Promise<void> {
   try {
+    const octokit = getOctokit(token);
     await octokit.rest.issues.addLabels({
       owner,
       repo,

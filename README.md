@@ -21,29 +21,33 @@ pnpm install
 
 ### 2. Set Up GitHub Token
 
-1. Go to [GitHub Settings → Personal Access Tokens](https://github.com/settings/tokens)
-2. Create a new token (classic) with the following scopes:
-   - `repo` (Full control of private repositories)
-3. Copy `.env.example` to `.env.local`:
+- **Swipe Interface**: Triage issues with intuitive swipe gestures
+- **Local Storage**: Your token and preferences are stored securely in your browser
+- **Dynamic Fetching**: Loads your actual GitHub issues in real-time
+- **Use keyboard shortcuts** for faster triage:
+  - `←` Left Arrow: Later
+  - `↑` Up Arrow: Close with wontfix
+  - `→` Right Arrow: Assign to me
+  - `Ctrl/Cmd + Z`: Undo
 
-```bash
-cp .env.example .env.local
-```
+## Setup
 
-4. Edit `.env.local` and add your credentials:
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   pnpm install
+   ```
+3. Run the development server:
+   ```bash
+   pnpm dev
+   ```
+4. Open [http://localhost:3000](http://localhost:3000)
+5. **Onboarding**: The app will ask for your GitHub Personal Access Token on the first load. This token is stored **locally** in your browser and is never sent to our servers.
 
-```env
-NEXT_PUBLIC_GITHUB_TOKEN=ghp_your_token_here
-NEXT_PUBLIC_GITHUB_USERNAME=your-username
-```
+## Environment Variables
 
-### 3. Run the App
-
-```bash
-pnpm dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) to start triaging!
+The app previously required `.env.local` for tokens. This is no longer needed for the core functionality.
+You may still use `.env.local` for other configurations if needed.
 
 ## How It Works
 
