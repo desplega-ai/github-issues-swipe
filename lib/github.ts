@@ -18,7 +18,7 @@ function getOctokit(token: string) {
   return new Octokit({
     auth: token,
     request: {
-      fetch: (url: string, options: any) => {
+      fetch: (url: string, options: RequestInit) => {
         return fetch(url, {
           ...options,
           cache: 'no-store',
