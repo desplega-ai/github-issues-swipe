@@ -7,7 +7,7 @@ import { IssueCard } from '@/components/IssueCard';
 import { SwipeControls } from '@/components/SwipeControls';
 import { Onboarding } from '@/components/Onboarding';
 import {
-  fetchUserIssues,
+  fetchRepoIssues,
   assignIssueToMe,
   closeIssueWithWontfix,
   markIssueForLater,
@@ -23,6 +23,8 @@ export default function Home() {
     loading,
     error,
     userToken,
+    repoOwner,
+    repoName,
     setIssues,
     setLoading,
     setError,
@@ -32,7 +34,7 @@ export default function Home() {
     getCurrentIssue,
   } = useIssuesStore();
 
-  const [initialized, setInitialized] = useState(false);
+
   const [processing, setProcessing] = useState(false);
   const [isClient, setIsClient] = useState(false);
 
@@ -44,12 +46,12 @@ export default function Home() {
   const isComplete = currentIndex >= issues.length && issues.length > 0;
 
   // Load issues on mount or when token changes
+  // Load issues on mount or when token changes
   useEffect(() => {
-    if (userToken && !initialized) {
+    if (userToken) {
       loadIssues();
-      setInitialized(true);
     }
-  }, [userToken, initialized]);
+  }, [userToken]);
 
   // Keyboard controls
   useEffect(() => {
@@ -82,12 +84,12 @@ export default function Home() {
   }, [currentIssue, processing, userToken]);
 
   async function loadIssues() {
-    if (!userToken) return;
+    if (!userToken || !repoOwner || !repoName) return;
 
     setLoading(true);
     setError(null);
     try {
-      const fetchedIssues = await fetchUserIssues(userToken);
+      const fetchedIssues = await fetchRepoIssues(userToken, repoOwner, repoName);
       setIssues(fetchedIssues);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to load issues');
@@ -97,12 +99,11 @@ export default function Home() {
   }
 
   async function handleSwipeLeft() {
-    if (!currentIssue || processing || !userToken) return;
+    if (!currentIssue || processing || !userToken || !repoOwner || !repoName) return;
 
     setProcessing(true);
     try {
-      const { owner, repo } = parseRepositoryUrl(currentIssue.repository_url);
-      await markIssueForLater(userToken, owner, repo, currentIssue.number);
+      await markIssueForLater(userToken, repoOwner, repoName, currentIssue.number);
       recordSwipe('left', currentIssue);
       nextIssue();
     } catch (err) {
@@ -114,12 +115,11 @@ export default function Home() {
   }
 
   async function handleSwipeRight() {
-    if (!currentIssue || processing || !userToken) return;
+    if (!currentIssue || processing || !userToken || !repoOwner || !repoName) return;
 
     setProcessing(true);
     try {
-      const { owner, repo } = parseRepositoryUrl(currentIssue.repository_url);
-      await assignIssueToMe(userToken, owner, repo, currentIssue.number);
+      await assignIssueToMe(userToken, repoOwner, repoName, currentIssue.number);
       recordSwipe('right', currentIssue);
       nextIssue();
     } catch (err) {
@@ -131,12 +131,11 @@ export default function Home() {
   }
 
   async function handleSwipeUp() {
-    if (!currentIssue || processing || !userToken) return;
+    if (!currentIssue || processing || !userToken || !repoOwner || !repoName) return;
 
     setProcessing(true);
     try {
-      const { owner, repo } = parseRepositoryUrl(currentIssue.repository_url);
-      await closeIssueWithWontfix(userToken, owner, repo, currentIssue.number);
+      await closeIssueWithWontfix(userToken, repoOwner, repoName, currentIssue.number);
       recordSwipe('up', currentIssue);
       nextIssue();
     } catch (err) {
@@ -174,7 +173,7 @@ export default function Home() {
 
       {/* Main Content */}
       <main className="flex flex-1 flex-col items-center justify-center p-4">
-        {!userToken ? (
+        {!userToken || !repoOwner || !repoName ? (
           <Onboarding />
         ) : loading ? (
           <div className="text-center">

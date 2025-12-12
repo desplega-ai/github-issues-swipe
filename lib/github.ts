@@ -2,19 +2,23 @@ import { Octokit } from '@octokit/rest';
 import type { GitHubIssue } from '@/types';
 
 function getOctokit(token: string) {
+  if (typeof window === 'undefined') {
+    throw new Error('GitHub API calls must be made from the client side');
+  }
   return new Octokit({
     auth: token,
   });
 }
 
 /**
- * Fetches all open issues across all repositories for the authenticated user
+ * Fetches all open issues for a specific repository
  */
-export async function fetchUserIssues(token: string): Promise<GitHubIssue[]> {
+export async function fetchRepoIssues(token: string, owner: string, repo: string): Promise<GitHubIssue[]> {
   try {
     const octokit = getOctokit(token);
-    const response = await octokit.rest.issues.listForAuthenticatedUser({
-      filter: 'all',
+    const response = await octokit.rest.issues.listForRepo({
+      owner,
+      repo,
       state: 'open',
       sort: 'updated',
       direction: 'desc',
@@ -97,8 +101,23 @@ export async function markIssueForLater(token: string, owner: string, repo: stri
  * Extracts owner and repo name from repository URL
  */
 export function parseRepositoryUrl(repoUrl: string): { owner: string; repo: string } {
-  // Example: https://api.github.com/repos/owner/repo
-  const match = repoUrl.match(/repos\/([^/]+)\/([^/]+)/);
+  // Handle standard "https://github.com/owner/repo" and "https://api.github.com/repos/owner/repo"
+  // Also handle simple "owner/repo"
+  let match = repoUrl.match(/github.com\/([^/]+)\/([^/]+)/);
+
+  if (!match) {
+    match = repoUrl.match(/repos\/([^/]+)\/([^/]+)/);
+  }
+
+  if (!match) {
+    // Check for "owner/repo" format that doesn't start with http/https/github.com
+    // but isn't just a random string
+    const simpleMatch = repoUrl.match(/^([^/]+)\/([^/]+)$/);
+    if (simpleMatch) {
+      match = simpleMatch;
+    }
+  }
+
   if (!match) {
     throw new Error('Invalid repository URL');
   }

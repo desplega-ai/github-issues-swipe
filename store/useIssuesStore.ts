@@ -4,6 +4,8 @@ import type { GitHubIssue, SwipeAction, SwipeDirection } from '@/types';
 
 interface IssuesState {
   userToken: string | null;
+  repoOwner: string | null;
+  repoName: string | null;
   issues: GitHubIssue[];
   currentIndex: number;
   swipeHistory: SwipeAction[];
@@ -12,6 +14,7 @@ interface IssuesState {
 
   // Actions
   setUserToken: (token: string) => void;
+  setRepo: (owner: string, repo: string) => void;
   setIssues: (issues: GitHubIssue[]) => void;
   setLoading: (loading: boolean) => void;
   setError: (error: string | null) => void;
@@ -26,13 +29,24 @@ export const useIssuesStore = create<IssuesState>()(
   persist(
     (set, get) => ({
       userToken: null,
+      repoOwner: null,
+      repoName: null,
       issues: [],
       currentIndex: 0,
       swipeHistory: [],
       loading: false,
       error: null,
 
-      setUserToken: (token) => set({ userToken: token }),
+      setUserToken: (token) => set({
+        userToken: token,
+        issues: [],
+        currentIndex: 0,
+        swipeHistory: [],
+        loading: false,
+        error: null
+      }),
+
+      setRepo: (owner, repo) => set({ repoOwner: owner, repoName: repo }),
 
       setIssues: (issues) => set({ issues, currentIndex: 0 }),
 
@@ -83,6 +97,8 @@ export const useIssuesStore = create<IssuesState>()(
       name: 'github-issues-storage',
       partialize: (state) => ({
         userToken: state.userToken,
+        repoOwner: state.repoOwner,
+        repoName: state.repoName,
         swipeHistory: state.swipeHistory,
         // We can persist issues too, but it might be stale. 
         // Given "store everything locally", let's persist it.

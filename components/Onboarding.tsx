@@ -2,28 +2,32 @@ import { useState } from 'react';
 import { Shield, Key, ExternalLink } from 'lucide-react';
 import { useIssuesStore } from '@/store/useIssuesStore';
 
+import { parseRepositoryUrl } from '@/lib/github';
+
 export function Onboarding() {
     const [token, setToken] = useState('');
+    const [repoUrl, setRepoUrl] = useState('');
     const [error, setError] = useState('');
+
     const setUserToken = useIssuesStore((state) => state.setUserToken);
+    const setRepo = useIssuesStore((state) => state.setRepo);
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+        setError('');
+
         if (!token.trim()) {
             setError('Please enter a valid GitHub token');
             return;
         }
-        if (!token.startsWith('ghp_') && !token.startsWith('github_pat_')) {
-            // Just a soft warning/check, typically PATs start with these but not always strict.
-            // Let's not block it, just in case. Or maybe we should? 
-            // Nah, let the API validation handle it.
-        }
 
-        setUserToken(token.trim());
-        // Trigger a reload or state change? 
-        // The parent component should react to the store change.
-        // Ideally we might want to validate the token here before saving, but the plan said "Save -> App Loads -> Verify".
-        // Let's just save for now. Validation will happen when fetching issues.
+        try {
+            const { owner, repo } = parseRepositoryUrl(repoUrl);
+            setUserToken(token.trim());
+            setRepo(owner, repo);
+        } catch (err) {
+            setError('Invalid repository URL. Please use format: https://github.com/owner/repo');
+        }
     };
 
     return (
@@ -62,6 +66,22 @@ export function Onboarding() {
                                 />
                             </div>
                             {error && <p className="mt-2 text-sm text-red-500">{error}</p>}
+                        </div>
+
+                        {/* Repository Input */}
+                        <div>
+                            <label htmlFor="repo" className="mb-2 block text-sm font-medium text-gray-300">
+                                Repository URL
+                            </label>
+                            <input
+                                type="text"
+                                id="repo"
+                                value={repoUrl}
+                                onChange={(e) => setRepoUrl(e.target.value)}
+                                className="block w-full rounded-lg border border-gray-700 bg-gray-800 p-3 text-white placeholder-gray-500 focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                                placeholder="https://github.com/owner/repo"
+                                required
+                            />
                         </div>
 
                         {/* Instructions */}
