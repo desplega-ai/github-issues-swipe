@@ -9,8 +9,10 @@
 
 👉 **[Use it for free at swipe.desplega.sh](https://swipe.desplega.sh)**
 
-
-![GitHub Issues Swipe Demo](./demo.gif)
+<div align="center">
+  <video src="https://github.com/user-attachments/assets/2b31d3d8-480b-4fce-967e-ed481d2129d9" autoplay loop muted playsinline style="max-width: 100%;">
+  </video>
+</div>
 
 ## Why do I need this?
 
