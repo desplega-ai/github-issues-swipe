@@ -1,0 +1,35 @@
+{
+  "name": "swipe.desplega.sh - GitHub Issues Swipe",
+  "short_name": "desplega.sh",
+  "description": "Swipe through GitHub issues with ease.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#FFC700",
+  "orientation": "portrait-primary",
+  "categories": ["productivity", "developer", "business"],
+  "lang": "en",
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "/images/desplega-logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/images/desplega-logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/images/desplega-logo.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide"
+    }
+  ]
+}

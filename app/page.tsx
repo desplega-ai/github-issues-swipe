@@ -222,7 +222,10 @@ export default function Home() {
       <header className="border-b border-gray-800 bg-gray-900/50 backdrop-blur-sm">
         <div className="mx-auto max-w-4xl px-4 py-4">
           <div className="flex items-center justify-between">
-            <h1 className="text-2xl font-bold text-white">GitHub Issues Swipe</h1>
+            <div className="flex items-center gap-3">
+              <img src="/images/desplega-logo.svg" alt="Desplega Logo" className="h-8 w-8" />
+              <h1 className="text-2xl font-bold text-white">GitHub Issues Swipe</h1>
+            </div>
 
             <div className="flex items-center gap-4">
               {issues.length > 0 && (
