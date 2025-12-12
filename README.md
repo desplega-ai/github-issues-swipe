@@ -7,6 +7,9 @@
 
 > **Triage GitHub issues 10x faster. Swipe your way to Inbox Zero.**
 
+👉 **[Use it for free at swipe.desplega.sh](https://swipe.desplega.sh)**
+
+
 ![GitHub Issues Swipe Demo](./demo.gif)
 
 ## Why do I need this?
@@ -18,7 +21,8 @@ Managing GitHub issues can be tedious. Endless lists, clicking into details, swi
 - ⚡️ **Speed**: Triage an issue in seconds, not minutes.
 - 🧠 **Focus**: See one issue at a time. No distractions.
 - ⌨️ **Flow**: Keyboard shortcuts for power users.
-- 🔒 **Privacy**: Your token is stored locally in your browser. We never see it.
+- 🔒 **Privacy & Security**: **Zero server-side storage.** Everything lives in your browser. Your token is stored locally and never sent to our servers.
+
 
 ## Features
 
