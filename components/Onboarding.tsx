@@ -1,16 +1,47 @@
-import { useState } from 'react';
-import { Shield, Key, ExternalLink } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Shield, Key, ExternalLink, RefreshCw } from 'lucide-react';
 import { useIssuesStore } from '@/store/useIssuesStore';
 
-import { parseRepositoryUrl } from '@/lib/github';
+import { parseRepositoryUrl, fetchUserRepos } from '@/lib/github';
+import type { Repo } from '@/lib/github';
 
 export function Onboarding() {
     const [token, setToken] = useState('');
     const [repoUrl, setRepoUrl] = useState('');
+    const [repos, setRepos] = useState<Repo[]>([]);
+    const [loadingRepos, setLoadingRepos] = useState(false);
     const [error, setError] = useState('');
 
     const setUserToken = useIssuesStore((state) => state.setUserToken);
     const setRepo = useIssuesStore((state) => state.setRepo);
+
+    // Auto-load repos if token is pasted and has correct format
+    useEffect(() => {
+        if (token.length > 10) {
+            // Debounce or just check length? for now simple check
+            // Actually, best to rely on blur or manual load to avoid spamming while typing
+        }
+    }, [token]);
+
+    const loadRepos = async () => {
+        if (!token) return;
+
+        // Reset error if it was "repo error", but maybe keep if token error?
+        setError('');
+        setLoadingRepos(true);
+        try {
+            const fetchedRepos = await fetchUserRepos(token);
+            setRepos(fetchedRepos);
+            if (fetchedRepos.length === 0) {
+                // Maybe show message but don't error?
+            }
+        } catch (e) {
+            console.error("Failed to load repos", e);
+            // Don't block flow, maybe token is invalid but we'll catch that on submit or user notices
+        } finally {
+            setLoadingRepos(false);
+        }
+    };
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -60,28 +91,79 @@ export function Onboarding() {
                                         setToken(e.target.value);
                                         setError('');
                                     }}
+                                    onBlur={() => { if (token) loadRepos(); }}
                                     className="block w-full rounded-lg border border-gray-700 bg-gray-800 p-3 pl-10 text-white placeholder-gray-500 focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                                     placeholder="ghp_..."
                                     required
                                 />
                             </div>
+                            <p className="mt-1 text-xs text-gray-500">Provide a token to load your repositories.</p>
                             {error && <p className="mt-2 text-sm text-red-500">{error}</p>}
                         </div>
 
                         {/* Repository Input */}
                         <div>
                             <label htmlFor="repo" className="mb-2 block text-sm font-medium text-gray-300">
-                                Repository URL
+                                Repository
                             </label>
-                            <input
-                                type="text"
-                                id="repo"
-                                value={repoUrl}
-                                onChange={(e) => setRepoUrl(e.target.value)}
-                                className="block w-full rounded-lg border border-gray-700 bg-gray-800 p-3 text-white placeholder-gray-500 focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                                placeholder="https://github.com/owner/repo"
-                                required
-                            />
+                            <div className="flex gap-2">
+                                <div className="relative flex-1">
+                                    {loadingRepos ? (
+                                        <div className="absolute inset-y-0 left-0 flex items-center pl-3">
+                                            <RefreshCw className="h-5 w-5 animate-spin text-gray-400" />
+                                        </div>
+                                    ) : null}
+
+                                    {repos.length > 0 ? (
+                                        <select
+                                            id="repo"
+                                            value={repoUrl}
+                                            onChange={(e) => setRepoUrl(e.target.value)}
+                                            className={`w-full appearance-none rounded-lg border border-gray-700 bg-gray-800 p-3 text-white focus:border-blue-500 focus:outline-none ${loadingRepos ? 'pl-10' : ''}`}
+                                            required
+                                        >
+                                            <option value="">Select a repository...</option>
+                                            {repos.map((repo) => (
+                                                <option key={repo.id} value={repo.html_url}>
+                                                    {repo.full_name}
+                                                </option>
+                                            ))}
+                                            {repoUrl && !repos.some(r => r.html_url === repoUrl) && (
+                                                <option value={repoUrl}>{repoUrl} (Manual)</option>
+                                            )}
+                                        </select>
+                                    ) : (
+                                        <input
+                                            type="text"
+                                            id="repo"
+                                            value={repoUrl}
+                                            onChange={(e) => setRepoUrl(e.target.value)}
+                                            className={`block w-full rounded-lg border border-gray-700 bg-gray-800 p-3 text-white placeholder-gray-500 focus:border-blue-500 focus:ring-blue-500 sm:text-sm ${loadingRepos ? 'pl-10' : ''}`}
+                                            placeholder="https://github.com/owner/repo"
+                                            required
+                                        />
+                                    )}
+                                </div>
+                                <button
+                                    type="button"
+                                    onClick={loadRepos}
+                                    disabled={loadingRepos || !token}
+                                    className="flex items-center justify-center rounded-lg border border-gray-700 bg-gray-800 px-4 text-gray-300 hover:bg-gray-700 disabled:opacity-50"
+                                    title="Refresh Repositories"
+                                >
+                                    <RefreshCw className={`h-5 w-5 ${loadingRepos ? 'animate-spin' : ''}`} />
+                                </button>
+                            </div>
+
+                            {repos.length > 0 && (
+                                <button
+                                    type="button"
+                                    onClick={() => setRepos([])}
+                                    className="mt-1 text-xs text-blue-400 hover:text-blue-300 hover:underline"
+                                >
+                                    Switch to manual URL input
+                                </button>
+                            )}
                         </div>
 
                         {/* Instructions */}

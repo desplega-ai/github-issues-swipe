@@ -20,9 +20,21 @@ export interface GitHubIssue {
   created_at: string;
   updated_at: string;
   repository_url: string;
+  comments: number;
+  reactions: {
+    total_count: number;
+    '+1': number;
+    '-1': number;
+    laugh: number;
+    hooray: number;
+    confused: number;
+    heart: number;
+    rocket: number;
+    eyes: number;
+  };
 }
 
-export type SwipeDirection = 'left' | 'right' | 'up';
+export type SwipeDirection = 'left' | 'right' | 'up' | 'down';
 
 export interface SwipeAction {
   direction: SwipeDirection;

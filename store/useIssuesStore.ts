@@ -2,6 +2,14 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import type { GitHubIssue, SwipeAction, SwipeDirection } from '@/types';
 
+
+export interface Settings {
+  swipeLeftLabel: string;
+  swipeRightLabel: string | null;
+  swipeUpLabel: string;
+  skipIssuesWithSwipeLeftLabel: boolean;
+}
+
 interface IssuesState {
   userToken: string | null;
   repoOwner: string | null;
@@ -11,6 +19,7 @@ interface IssuesState {
   swipeHistory: SwipeAction[];
   loading: boolean;
   error: string | null;
+  settings: Settings;
 
   // Actions
   setUserToken: (token: string) => void;
@@ -23,6 +32,7 @@ interface IssuesState {
   undo: () => void;
   reset: () => void;
   getCurrentIssue: () => GitHubIssue | null;
+  updateSettings: (settings: Partial<Settings>) => void;
 }
 
 export const useIssuesStore = create<IssuesState>()(
@@ -36,6 +46,12 @@ export const useIssuesStore = create<IssuesState>()(
       swipeHistory: [],
       loading: false,
       error: null,
+      settings: {
+        swipeLeftLabel: 'later',
+        swipeRightLabel: null,
+        swipeUpLabel: 'wontfix',
+        skipIssuesWithSwipeLeftLabel: true,
+      },
 
       setUserToken: (token) => set({
         userToken: token,
@@ -92,6 +108,10 @@ export const useIssuesStore = create<IssuesState>()(
         const { issues, currentIndex } = get();
         return issues[currentIndex] || null;
       },
+
+      updateSettings: (newSettings) => set((state) => ({
+        settings: { ...state.settings, ...newSettings }
+      })),
     }),
     {
       name: 'github-issues-storage',
@@ -103,7 +123,8 @@ export const useIssuesStore = create<IssuesState>()(
         // We can persist issues too, but it might be stale. 
         // Given "store everything locally", let's persist it.
         issues: state.issues,
-        currentIndex: state.currentIndex
+        currentIndex: state.currentIndex,
+        settings: state.settings,
       }),
     }
   )
