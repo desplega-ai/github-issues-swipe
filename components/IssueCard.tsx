@@ -15,9 +15,10 @@ interface IssueCardProps {
   onSwipeUp: () => void;
   onSwipeDown: () => void;
   style?: React.CSSProperties;
+  disabled?: boolean;
 }
 
-export function IssueCard({ issue, onSwipeLeft, onSwipeRight, onSwipeUp, onSwipeDown, style }: IssueCardProps) {
+export function IssueCard({ issue, onSwipeLeft, onSwipeRight, onSwipeUp, onSwipeDown, style, disabled = false }: IssueCardProps) {
   const [zoomedImage, setZoomedImage] = useState<string | null>(null);
   const [exitDirection, setExitDirection] = useState<'left' | 'right' | 'up' | 'down' | null>(null);
 
@@ -81,7 +82,7 @@ export function IssueCard({ issue, onSwipeLeft, onSwipeRight, onSwipeUp, onSwipe
   return (
     <>
       <motion.div
-        drag={exitDirection ? false : true} // Disable drag once exiting
+        drag={exitDirection || disabled ? false : true} // Disable drag once exiting or when disabled
         dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
         dragElastic={0.7}
         onDragEnd={handleDragEnd}
@@ -89,7 +90,7 @@ export function IssueCard({ issue, onSwipeLeft, onSwipeRight, onSwipeUp, onSwipe
         style={{ x, y, rotateZ, zIndex: exitDirection ? 0 : 1, ...style }}
         // Simple exit animation for when component unmounts (e.g. undo)
         exit={{ scale: 0.9, opacity: 0 }}
-        className="absolute inset-0 cursor-grab active:cursor-grabbing"
+        className={`absolute inset-0 ${disabled ? 'cursor-not-allowed' : 'cursor-grab active:cursor-grabbing'}`}
       >
         {/* Dynamic colored glow moves with card */}
         <motion.div

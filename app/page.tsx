@@ -30,6 +30,7 @@ export default function Home() {
     repoOwner,
     repoName,
     settings,
+    isDemoMode,
     setIssues,
     setLoading,
     setError,
@@ -43,6 +44,58 @@ export default function Home() {
   const [isClient, setIsClient] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
+  const [showMeme, setShowMeme] = useState<string | null>(null);
+  const [pendingSwipe, setPendingSwipe] = useState<{ direction: 'left' | 'right' | 'up' | 'down', issue: any } | null>(null);
+
+  // List of all meme files in the directory
+  const memeFiles = [
+    '/memes/meme-0.png',
+    '/memes/meme-1.png',
+    '/memes/meme-2.png',
+    '/memes/meme-3.png',
+    '/memes/meme-4.png',
+    '/memes/meme-5.png',
+    '/memes/meme-6.png',
+    '/memes/meme-7.jpg',
+    '/memes/meme-8.png',
+    '/memes/meme-9.png',
+    '/memes/meme-10.webp',
+    '/memes/meme-11.jpeg',
+    '/memes/meme-12.png',
+    '/memes/meme-13.webp',
+    '/memes/meme-14.jpeg',
+    '/memes/meme-15.webp',
+    '/memes/meme-16.webp',
+    '/memes/meme-17.jpg',
+    '/memes/meme-18.jpg',
+    '/memes/meme-19.jpg',
+    '/memes/meme-20.jpg',
+    '/memes/meme-21.jpg',
+    '/memes/meme-23.jpg',
+  ];
+
+  const getRandomMeme = () => {
+    return memeFiles[Math.floor(Math.random() * memeFiles.length)];
+  };
+
+  // Helper function to show meme and handle swipe in demo mode
+  const handleDemoSwipe = (direction: 'left' | 'right' | 'up' | 'down', issue: any) => {
+    // 35% chance to show a meme
+    if (Math.random() < 0.37) {
+      setPendingSwipe({ direction, issue });
+      setShowMeme(getRandomMeme());
+      setTimeout(() => {
+        setShowMeme(null);
+        recordSwipe(direction, issue);
+        nextIssue();
+        setPendingSwipe(null);
+      }, 2000); // Show meme for 2 seconds
+    } else {
+      // No meme, just proceed normally
+      recordSwipe(direction, issue);
+      nextIssue();
+    }
+  };
 
   useEffect(() => {
     setIsClient(true);
@@ -57,9 +110,16 @@ export default function Home() {
   const currentIssue = getCurrentIssue();
   const isComplete = currentIndex >= issues.length && issues.length > 0;
 
+  // Load demo issues when demo mode is activated
+  useEffect(() => {
+    if (isDemoMode) {
+      loadDemoIssues();
+    }
+  }, [isDemoMode]);
+
   // Load issues on mount or when token changes
   useEffect(() => {
-    if (userToken) {
+    if (userToken && !isDemoMode) {
       loadIssues();
     }
   }, [userToken, repoOwner, repoName]); // reload if repo changes too
@@ -67,7 +127,7 @@ export default function Home() {
   // Keyboard controls
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (processing || !currentIssue || !userToken || showSettings || showCelebration) return;
+      if (processing || !currentIssue || (!userToken && !isDemoMode) || showSettings || showCelebration || showMeme) return;
 
       switch (e.key) {
         case 'ArrowLeft':
@@ -93,6 +153,73 @@ export default function Home() {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [currentIssue, processing, userToken, showSettings, showCelebration]);
+
+  async function loadDemoIssues() {
+    try {
+      // Load issues from public/issues.json
+      const response = await fetch('/issues.json');
+      if (!response.ok) {
+        throw new Error('Failed to load demo issues');
+      }
+      
+      const rawIssues = await response.json();
+      
+      // Get random sample of 20 issues
+      const shuffled = [...rawIssues].sort(() => Math.random() - 0.5);
+      const sample = shuffled.slice(0, 20);
+      
+      // Map to GitHubIssue format
+      const demoIssues = sample.map((issue: any) => {
+        // Map correctAnswer to swipe direction
+        let swipeDirection: 'left' | 'right' | 'up' = 'left';
+        if (issue.correctAnswer === 'bug') {
+          swipeDirection = 'right'; // Assign to me (real bug needs fixing)
+        } else if (issue.correctAnswer === 'known-issue') {
+          swipeDirection = 'up'; // Close with wontfix (framework limitation)
+        } else if (issue.correctAnswer === 'user-error') {
+          swipeDirection = 'left'; // Mark for later (user misunderstanding)
+        } else {
+          swipeDirection = 'left'; // Default to left
+        }
+        
+        return {
+          id: issue.id,
+          number: issue.id,
+          title: issue.title,
+          body: issue.description || null,
+          html_url: `https://github.com/microsoft/${issue.repo || 'playwright'}/issues/${issue.id}`,
+          state: 'open' as const,
+          user: {
+            login: 'playwright-bot',
+            avatar_url: 'https://github.com/ghost.png',
+          },
+          labels: [],
+          assignees: [],
+          created_at: new Date(Date.now() - Math.random() * 365 * 24 * 60 * 60 * 1000).toISOString(),
+          updated_at: new Date().toISOString(),
+          repository_url: `https://api.github.com/repos/microsoft/${issue.repo || 'playwright'}`,
+          comments: issue.stats?.comments || 0,
+          reactions: {
+            total_count: issue.stats?.votes || 0,
+            '+1': 0,
+            '-1': 0,
+            laugh: 0,
+            hooray: 0,
+            confused: 0,
+            heart: 0,
+            rocket: 0,
+            eyes: 0,
+          },
+          correctAnswer: swipeDirection,
+        };
+      });
+      
+      setIssues(demoIssues);
+    } catch (err) {
+      console.error('Error loading demo issues:', err);
+      setError('Failed to load demo issues');
+    }
+  }
 
   async function loadIssues() {
     if (!userToken || !repoOwner || !repoName) return;
@@ -131,7 +258,15 @@ export default function Home() {
 
 
   async function handleSwipeLeft() {
-    if (!currentIssue || processing || !userToken || !repoOwner || !repoName) return;
+    if (!currentIssue || processing || showMeme) return;
+
+    // Demo mode - show meme on every swipe
+    if (isDemoMode) {
+      handleDemoSwipe('left', currentIssue);
+      return;
+    }
+
+    if (!userToken || !repoOwner || !repoName) return;
 
     // Optimistic update
     const issueToProcess = currentIssue;
@@ -147,7 +282,15 @@ export default function Home() {
   }
 
   async function handleSwipeRight() {
-    if (!currentIssue || processing || !userToken || !repoOwner || !repoName) return;
+    if (!currentIssue || processing || showMeme) return;
+
+    // Demo mode - show meme on every swipe
+    if (isDemoMode) {
+      handleDemoSwipe('right', currentIssue);
+      return;
+    }
+
+    if (!userToken || !repoOwner || !repoName) return;
 
     // Optimistic update
     const issueToProcess = currentIssue;
@@ -162,7 +305,15 @@ export default function Home() {
   }
 
   async function handleSwipeUp() {
-    if (!currentIssue || processing || !userToken || !repoOwner || !repoName) return;
+    if (!currentIssue || processing || showMeme) return;
+
+    // Demo mode - show meme on every swipe
+    if (isDemoMode) {
+      handleDemoSwipe('up', currentIssue);
+      return;
+    }
+
+    if (!userToken || !repoOwner || !repoName) return;
 
     // Optimistic update
     const issueToProcess = currentIssue;
@@ -177,7 +328,13 @@ export default function Home() {
   }
 
   async function handleSwipeDown() {
-    if (!currentIssue || processing) return;
+    if (!currentIssue || processing || showMeme) return;
+
+    // Demo mode - show meme on every swipe
+    if (isDemoMode) {
+      handleDemoSwipe('down', currentIssue);
+      return;
+    }
 
     // Just skip, no GitHub API call needed
     recordSwipe('down', currentIssue);
@@ -185,7 +342,15 @@ export default function Home() {
   }
 
   async function handleUndo() {
-    if (swipeHistory.length === 0 || processing || !userToken || !repoOwner || !repoName) return;
+    if (swipeHistory.length === 0 || processing) return;
+
+    // In demo mode, just undo without API calls
+    if (isDemoMode) {
+      undo();
+      return;
+    }
+
+    if (!userToken || !repoOwner || !repoName) return;
 
     // Get the last action
     const lastAction = swipeHistory[swipeHistory.length - 1];
@@ -255,7 +420,7 @@ export default function Home() {
 
       {/* Main Content */}
       <main className="flex flex-1 flex-col items-center justify-center p-4">
-        {!userToken || !repoOwner || !repoName ? (
+        {(!userToken || !repoOwner || !repoName) && !isDemoMode ? (
           <Onboarding />
         ) : loading ? (
           <div className="text-center">
@@ -372,6 +537,32 @@ export default function Home() {
               {processing && (
                 <div className="absolute inset-0 flex items-center justify-center rounded-2xl bg-black/50 backdrop-blur-sm z-50">
                   <Loader2 className="h-12 w-12 animate-spin text-blue-500" />
+                </div>
+              )}
+
+              {/* Meme Overlay - Show on every swipe in demo mode */}
+              {showMeme && pendingSwipe && (
+                <div 
+                  className="fixed inset-0 flex items-center justify-center bg-black/90 backdrop-blur-md z-[100] cursor-pointer"
+                  onClick={() => {
+                    setShowMeme(null);
+                    recordSwipe(pendingSwipe.direction, pendingSwipe.issue);
+                    nextIssue();
+                    setPendingSwipe(null);
+                  }}
+                >
+                  <div className="text-center w-full h-[500px] flex items-center justify-center px-4">
+                    <img
+                      src={showMeme}
+                      alt="Meme"
+                      className="h-full w-auto object-contain rounded-lg"
+                      onError={(e) => {
+                        // Fallback if meme doesn't exist
+                        console.error('Failed to load meme:', showMeme);
+                        (e.target as HTMLImageElement).style.display = 'none';
+                      }}
+                    />
+                  </div>
                 </div>
               )}
             </div>

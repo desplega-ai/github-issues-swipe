@@ -1,0 +1,1234 @@
+[
+  {
+    "id": 38375,
+    "title": "Playwright Agent /MCP tools to support npm script based execution.",
+    "description": "### 🚀 Feature Request It is very common practice to have custom command line arguments to set the runner env contexts. In current setup, if we have any custom command line arguments, Playwright agents and mcp is not able to handle them. If we enable npm script support for mcp tools, it will boost the capability to handle all various type of arguments and custom setup of the project. ### Example mcp tools can execute npm run <script> it will handle all configuration requirement. ### Motivation...",
+    "repo": "playwright",
+    "correctAnswer": "user-error",
+    "stats": {
+      "comments": 2,
+      "votes": 0
+    }
+  },
+  {
+    "id": 38147,
+    "title": "How do I change the html report generated ? Is there any ad-hoc command which we can run?",
+    "description": "### Please do not submit this issue. - [x] I understand that this issue will be closed",
+    "repo": "playwright",
+    "correctAnswer": "user-error",
+    "stats": {
+      "comments": 0,
+      "votes": 0
+    }
+  },
+  {
+    "id": 38051,
+    "title": "cdn.playwright.dev does not appear to exist.",
+    "description": "### Version 1.56.1 ### Steps to reproduce As per the docs, I ran the following command on October 29th, 2025: [code block] ### Expected behavior A normal run. ### Actual behavior [code block] ### Additional context Even if it uses a fallback domain, the fact that `cdn.playwright.dev` doesn't exist means that someone could register it and can drop arbitrary payloads on millions of machines. I would imagine that makes this a 9/10 CVE or something similar, and should have immediately set off ala...",
+    "repo": "playwright",
+    "correctAnswer": "user-error",
+    "stats": {
+      "comments": 2,
+      "votes": 0
+    }
+  },
+  {
+    "id": 38034,
+    "title": "`playwright --ui` crashes in docker since v1.55",
+    "description": "### Version 1.55.0 and latest ### Steps to reproduce 1. Clone 2. `npm ci` 3. `npm run playwright-interactive` ### Expected behavior A playwright UI window opens (it does on v1.54.2) ### Actual behavior An empty, broken window opens. This is printed to the CLI: [code block] ### Additional context _No response_ ### Environment [code block]",
+    "repo": "playwright",
+    "correctAnswer": "user-error",
+    "stats": {
+      "comments": 7,
+      "votes": 1
+    }
+  },
+  {
+    "id": 38023,
+    "title": "Network calls from `APIRequestContext` not immediately shown in UI if not directly awaited",
+    "description": "### Version 1.56 ### Steps to reproduce Run the following test in UI mode: [code block] ### Expected behavior To see the GET call immediately in the network tab of UI mode <img width=\"417\" height=\"195\" alt=\"Image\" src=\" /> ### Actual behavior The call is only shown after the test has completed <img width=\"555\" height=\"171\" alt=\"Image\" src=\" /> ### Additional context _No response_ ### Environment [code block]",
+    "repo": "playwright",
+    "correctAnswer": "user-error",
+    "stats": {
+      "comments": 5,
+      "votes": 1
+    }
+  },
+  {
+    "id": 38002,
+    "title": "Add a timeout message option to locator.waitFor() method",
+    "description": "### 🚀 Feature Request When locator.waitFor() do not fulfill the wait and fail we get a fairly generic error message. The error messages usually looks something like this: [code block] or [code block] Add a message option to waitFor option where we could provide a custom error message. ### Example [code block] This could produce this failing msg: [code block] or we could get a similar error message structure as expects: [code block] ### Motivation This simple change would improve the error mes...",
+    "repo": "playwright",
+    "correctAnswer": "user-error",
+    "stats": {
+      "comments": 5,
+      "votes": 1
+    }
+  },
+  {
+    "id": 37895,
+    "title": "Expect: Add actionable hint on toBeVisible() timeout when element remains hidden",
+    "description": "### 🚀 Feature Request Add an actionable hint to the error message when `expect(locator).toBeVisible()` times out and the element exists but remains hidden. Specifically, when the matcher times out with `received === 'hidden'` (not “element(s) not found”), append a short **Hint** section suggesting: [code block] Only apply this to `toBeVisible` timeouts where the element resolved and stayed hidden; do not affect `.not.toBeVisible()` or other matchers. ### Example [code block] **Current error (...",
+    "repo": "playwright",
+    "correctAnswer": "user-error",
+    "stats": {
+      "comments": 2,
+      "votes": 0
+    }
+  },
+  {
+    "id": 37865,
+    "title": "UI Mode - Open snapshot in a new tab does not work for canvas content",
+    "description": "### Version 1.55.1 ### Steps to reproduce I am testing a canvas app Steps: 1. On UI mode I click on Settings and I check the option \"Display canvas content\" 2. Because the quality of the image is bad I want to open it in a new tab and I select \"Open snapshot in a new tab\" ### Expected behavior The canvas snapshot should be opened in a new tab and the quality of the image should be good. ### Actual behavior A new tab is opened, but I am not able to see the canvas snapshot, it seem like the set...",
+    "repo": "playwright",
+    "correctAnswer": "user-error",
+    "stats": {
+      "comments": 4,
+      "votes": 0
+    }
+  },
+  {
+    "id": 37845,
+    "title": "[Docs]: Document SVG imports for Component Testing",
+    "description": "### Page(s) ### Description Currently, Component Testing documentation does not contain any information about how to handle SVG imports in tested components. Without proper configuration, it results in failing tests as proper SVG loader is missing (at least in React). And to be honest, SVG imports are after CSS the most commonly used imports in components. There are two approaches available. **Without configuration** This uses data URL and it does not require further configuration. [code bloc...",
+    "repo": "playwright",
+    "correctAnswer": "user-error",
+    "stats": {
+      "comments": 2,
+      "votes": 0
+    }
+  },
+  {
+    "id": 37844,
+    "title": "How to automatically clear the cache files after the playwright command is executed, without having to manually clear...",
+    "description": "How to automatically clear the cache files after the playwright command is executed, without having to manually clear them through a command. Expection 1. Execute the command \"npx playwright\", 2. Wait for the task to be completed, 3. Automatically clear the cache of this task.",
+    "repo": "playwright",
+    "correctAnswer": "user-error",
+    "stats": {
+      "comments": 2,
+      "votes": 0
+    }
+  },
+  {
+    "id": 37765,
+    "title": "Trace Viewer shows multiple `Fixture \"page\"` steps",
+    "description": "### Version 1.56 ### Steps to reproduce Open trace for `examples/todomvc/tests/integration.spec.ts >> should respect the back button`. ### Expected behavior One `Fixture \"page\"` step with two entries underneath. ### Actual behavior Two consecutive steps: <img width=\"1392\" height=\"912\" alt=\"Image\" src=\" /> ### Additional context _No response_ ### Environment [code block]",
+    "repo": "playwright",
+    "correctAnswer": "user-error",
+    "stats": {
+      "comments": 1,
+      "votes": 0
+    }
+  },
+  {
+    "id": 37695,
+    "title": "example.spec.ts test fails",
+    "description": "### Version 1.55.1 ### Steps to reproduce 1. run `npm init playwright@latest` 2. run `npx playwright test` 3. observe that the 2nd test fails with a timeout on the `click()` event ### Expected behavior I expect all the example tests to pass. ### Actual behavior I get the following error and this call log, which resolves the locator but does not perform the click. [code block] ### Additional context If I add `.click({ force: true })` the tests all pass. ### Environment [code block]",
+    "repo": "playwright",
+    "correctAnswer": "user-error",
+    "stats": {
+      "comments": 3,
+      "votes": 1
+    }
+  },
+  {
+    "id": 37666,
+    "title": "Time out when downloading browsers",
+    "description": "### Version 1.55.1 ### Steps to reproduce 1. npm init playwright@latest 2. create a github action to run the demo tests 3. have the action run the npx playwright install command to download browsers 4. see timeout issue e.g. [code block] ### Expected behavior install command should successfully download the browser from initial CDN ### Actual behavior install command throws a timeout error and switches to a different CDN if I do not set `PLAYWRIGHT_DOWNLOAD_CONNECTION_TIMEOUT: 1000` the githu...",
+    "repo": "playwright",
+    "correctAnswer": "user-error",
+    "stats": {
+      "comments": 1,
+      "votes": 0
+    }
+  },
+  {
+    "id": 37662,
+    "title": "Favorites bar shifts down the viewport",
+    "description": "### Version 1.55 ### Steps to reproduce 1. Launch a playwright session with a page 2. Navigate to ` 3. Show favorites bar ### Expected behavior I expect still to see Home News and Contact. <img width=\"602\" height=\"481\" alt=\"Image\" src=\" /> <img width=\"602\" height=\"481\" alt=\"Image\" src=\" /> ### Actual behavior The displayed viewport also considers the height of the favorites bar. In a 'normal' browser ### Additional context I tried this with edge, chrome and chromium. All show the same behavio...",
+    "repo": "playwright",
+    "correctAnswer": "user-error",
+    "stats": {
+      "comments": 5,
+      "votes": 0
+    }
+  },
+  {
+    "id": 37521,
+    "title": "Floating-point number gets truncated with Chromium Playwright inside Docker",
+    "description": "### Version 1.55.0 ### Steps to reproduce Steps: 1. Clone my repo 2. Run `pnpm i` to install dependencies 3. Run `pnpm dev` to run application 4. In a separate terminal session run [code block] ### Expected behavior it should render `76.25` and test should pass. ### Actual behavior it renders `76` ### Additional context _No response_ ### Environment [code block] outside docker [code block]",
+    "repo": "playwright",
+    "correctAnswer": "user-error",
+    "stats": {
+      "comments": 9,
+      "votes": 2
+    }
+  },
+  {
+    "id": 37476,
+    "title": "Unable to perform hover on an element after using page.reload(); or window.location.reload()",
+    "description": "### Version ^1.52.0 ### Steps to reproduce **Simple steps to reproduce:** - You have a page that contains for example a button that shows content when hovering it. - Within playwright test you go to that page, you wait for the page to load and hydrate, you hover the button, the related content is displayed. Now 2 possible ways for page reload. 1) within playwright test, use `await page.reload()` 2) button within app that triggers `window.location.reload()` - Again wait for page to load and hy...",
+    "repo": "playwright",
+    "correctAnswer": "user-error",
+    "stats": {
+      "comments": 3,
+      "votes": 0
+    }
+  },
+  {
+    "id": 37162,
+    "title": "Headed browser viewport rendering error on Hyprland",
+    "description": "### Version 1.55.0 ### Steps to reproduce Steps: 1. Run `npm init playwright@latest` 2. Modify the `example.spec.ts` file [code block] 3. Modify the `playwright.config.ts` file [code block] 4. Run `npx playwright test --project=chromium --headed --debug` and continue until the browser navigates to the [Playwright website]( ### Expected behavior The browser should be rendered without any unexpected offset as seen in this image: <img width=\"1322\" height=\"684\" alt=\"Normal browser viewport render...",
+    "repo": "playwright",
+    "correctAnswer": "user-error",
+    "stats": {
+      "comments": 2,
+      "votes": 0
+    }
+  },
+  {
+    "id": 37158,
+    "title": "Playwright e2e test fails in CI with real Auth0 login flow on localhost",
+    "description": "### Version 1.54 ### Steps to reproduce I’m trying to write end-to-end tests with Playwright for my app that uses Auth0 for authentication. The login flow works fine locally, but it consistently fails in CI. **Setup:** I have a setup file that logs in and waits for the user profile menu: [code block] **Issue:** Locally, the test passes. In CI, it fails in the setup file with: [code block] **Observations:** - My Auth0 app has ` as the allowed callback URL, which matches `webServer.url`. - Scre...",
+    "repo": "playwright",
+    "correctAnswer": "user-error",
+    "stats": {
+      "comments": 3,
+      "votes": 0
+    }
+  },
+  {
+    "id": 36969,
+    "title": "Add testInfo.disable() to completely exclude tests from reports and execution tracking",
+    "description": "Feature Request Currently, Playwright provides testInfo.skip() in beforeEach (and other hooks) to conditionally skip tests. While this is useful, skipped tests are still included in test reports — they appear as \"skipped\" in the output, CI logs, and HTML reporter. I'd like to propose a new method: testInfo.disable() — which would completely remove a test from execution and reporting, as if it didn't exist in the test suite at all. Use Case In some environments (e.g. CI with dynamic configura...",
+    "repo": "playwright",
+    "correctAnswer": "user-error",
+    "stats": {
+      "comments": 4,
+      "votes": 0
+    }
+  },
+  {
+    "id": 36968,
+    "title": "Playwright cannot capture stderr from Electron apps when module loading fails during startup",
+    "description": "### Version 1.54.2 ### Steps to reproduce When launching an Electron application via Playwright's _electron.launch(), errors that occur during synchronous module loading at startup are not captured in stderr, even though these same errors appear in stderr when running Electron directly. Reproduction: `npm install` and then follow instructions in the README to see the various scenarios ### Expected behavior Playwright should capture all stderr output from the Electron process, including early ...",
+    "repo": "playwright",
+    "correctAnswer": "user-error",
+    "stats": {
+      "comments": 2,
+      "votes": 0
+    }
+  },
+  {
+    "id": 36960,
+    "title": "Application is blank due to ERR_BLOCKED_BY_RESPONSE error message",
+    "description": "### Version Version 1.52.0 ### Steps to reproduce 1. Open application 2. Observe error message in traces: Failed to load resource: net::ERR_BLOCKED_BY_RESPONSE.NotSameOrigin ### Expected behavior Application should be displayed ### Actual behavior Application is blank ### Additional context _No response_ ### Environment [code block]",
+    "repo": "playwright",
+    "correctAnswer": "user-error",
+    "stats": {
+      "comments": 2,
+      "votes": 1
+    }
+  },
+  {
+    "id": 36684,
+    "title": "Include Playwright Package in Docker Image to Eliminate Runtime Dependency on Internet Connection",
+    "description": "### 🚀 Feature Request The official Playwright Docker image is version-scoped (e.g., 1.54.0) and includes all necessary system dependencies to run Playwright tests. However, the image currently removes the Playwright Node.js package during the final build stage. As a result, users must re-install the Playwright package (e.g., automatically via npx -y playwright@1.54.0) at runtime, which requires an active internet connection. This behavior seems inconsistent with the general purpose of Docker ...",
+    "repo": "playwright",
+    "correctAnswer": "user-error",
+    "stats": {
+      "comments": 5,
+      "votes": 0
+    }
+  },
+  {
+    "id": 36525,
+    "title": "The snapshot captured by toMatchSnapshot shows a font-weight discrepancy compared to the actual webpage rendering.",
+    "description": "### Version 1.53.2 ### Steps to reproduce Run snapshot assertions ### Expected behavior The font weight in the image matches that on the web page. ### Actual behavior Font weight inconsistency between image text and live webpage rendering. webpage： ![Image]( from toMatchSnapshot： ![Image]( ### Additional context projects: { name: 'MobileChrome', use: { ...devices['iPhone 14 Pro Max'] }, } ### Environment [code block]",
+    "repo": "playwright",
+    "correctAnswer": "user-error",
+    "stats": {
+      "comments": 4,
+      "votes": 0
+    }
+  },
+  {
+    "id": 36504,
+    "title": "REMOVE blocking Ctrl+C requirement from \"npx playwright show-report\"",
+    "description": "### 🚀 Feature Request [code block]bash npx playwright show-report # Serves at # Terminal blocks until Ctrl+C [code block]bash npx playwright show-report --no-server # Opens report file directly # Terminal returns immediately [code block]json { \"scripts\": { \"show-report\": \"start playwright-report/index.html\" } } [code block] ### Example In VS Terminal window, at the end of EVERY **show-report**, there's an obnoxious quasi-modal requirement to enter \"**Ctrl+C**\" (before other Terminal commands ...",
+    "repo": "playwright",
+    "correctAnswer": "user-error",
+    "stats": {
+      "comments": 3,
+      "votes": 2
+    }
+  },
+  {
+    "id": 36488,
+    "title": "Support for CaptchaAI API for Automatic CAPTCHA Solving",
+    "description": "### 🚀 Feature Request I would like to suggest adding support for CaptchaAI, a fast and affordable CAPTCHA-solving API. This could help users automatically solve CAPTCHA challenges during browser automation with Playwright. Here’s the API documentation: The API is simple to use and could save time for developers working with scraping, testing, or automation where CAPTCHAs block progress. ### Example A simple example would be providing guidance or utilities showing how to integrate CaptchaAI in...",
+    "repo": "playwright",
+    "correctAnswer": "user-error",
+    "stats": {
+      "comments": 1,
+      "votes": 0
+    }
+  },
+  {
+    "id": 36485,
+    "title": "Add option to output error reporter to console rather than error-context.md",
+    "description": "### 🚀 Feature Request Add an option such as an environment variable to allow the pre-1.52 behavior of having error reporters output to console rather than a file. ### Example Something like: PW_ERROR_REPORTER_TO_CONSOLE = 1 Should have the error reporter spit out results to console. ### Motivation For setups that involve several layers of encapsulation (such as tests running on ephemeral kubernetes pods on Github CI), it could be difficult to extract the error-context.md files. Reading the er...",
+    "repo": "playwright",
+    "correctAnswer": "user-error",
+    "stats": {
+      "comments": 5,
+      "votes": 0
+    }
+  },
+  {
+    "id": 36452,
+    "title": "Error taking a screenshot on a real device - Timeout",
+    "description": "### Version 1.53.1 ### Steps to reproduce 1. Enter to this documentation: [Playwright-BrowserStack real device IOS - Run Playwright tests on real iOS devices]( 2. Clone this repo: [node-js-playwright-browserstack]( 3. Follow the step by step listed on the documentation. 4. Go to a test and add a new line just after ` await page.goto(\" - tests/bstack_test_add_to_cart.js - tests/bstack_test_checkout_flow.js ` await page.screenshot({ path: \"example.png\", fullPage: true });` Your code must be lik...",
+    "repo": "playwright",
+    "correctAnswer": "user-error",
+    "stats": {
+      "comments": 1,
+      "votes": 0
+    }
+  },
+  {
+    "id": 38127,
+    "title": "npx playwright test --list does not consider .skip or .only modifiers",
+    "description": "### Version 1.56 ### Steps to reproduce Focus one test with e.g. `test.describe.only`, or skip some tests using `test.describe.skip` or `test.skip` Run `npx playwright test --list` ### Expected behavior The list should only include the tests that will actually be executed > [!NOTE] > I understand runtime `.skips` e.g. `test.skip(someCondition)` are probably difficult or impossible to support by the \"dry-run\" behavior of npx playwright test --list, but the hard-coded skip/only can probably be ...",
+    "repo": "playwright",
+    "correctAnswer": "known-issue",
+    "stats": {
+      "comments": 1,
+      "votes": 0
+    }
+  },
+  {
+    "id": 37734,
+    "title": "Before snapshot for first `page.goto` should not be able to be opened in new tab",
+    "description": "### Version 1.55.1 ### Steps to reproduce 1. Given you go to 2. When you open the first `page.goto` action <img width=\"461\" height=\"150\" alt=\"Image\" src=\" /> 3. And click on the `Before` tab <img width=\"191\" height=\"48\" alt=\"Image\" src=\" /> ### Expected behavior - To see the `Open snapshot in a new tab` button disabled - To have no console 404 error (from loading a snapshot that does not exist) - To see `about:blank` page ### Actual behavior - `Open snapshot in a new tab` button stays enabled...",
+    "repo": "playwright",
+    "correctAnswer": "known-issue",
+    "stats": {
+      "comments": 10,
+      "votes": 1
+    }
+  },
+  {
+    "id": 37477,
+    "title": "PW is unable to capture entire browser page screenshot with URL pane",
+    "description": "### Version 1.55 ### Steps to reproduce 1. Try to create any screenshot 2. In the screenshot, please check for the URL pane(as of now, we are seeing only the body image of the webpage ### Expected behavior We should be able to see the URL pane as well as it'll help in identifying the same issues in different environments of an application ### Actual behavior URL Pane is not getting captured ### Additional context _No response_ ### Environment [code block]",
+    "repo": "playwright",
+    "correctAnswer": "known-issue",
+    "stats": {
+      "comments": 1,
+      "votes": 0
+    }
+  },
+  {
+    "id": 37396,
+    "title": "'test file \"example.spec.ts\" should not import test file \"global.setup.ts\"' error for imported file that doesn't matc...",
+    "description": "### Version 1.55.0 ### Steps to reproduce 1. Clone 2. `npm install` 3. `npx playwright test` ### Expected behavior Tests run. ### Actual behavior Tests fail with the following error: [code block] This is unexpected because the setup file `global.setup.ts` imported in the test does **not** match the active `testMatch` configuration `*.spec.ts` (or the default of `**\\/*.@(spec|test).?(c|m)[jt]s?(x)` for that matter). ### Additional context - Seeing as this is pretty much exactly the setup recom...",
+    "repo": "playwright",
+    "correctAnswer": "known-issue",
+    "stats": {
+      "comments": 3,
+      "votes": 0
+    }
+  },
+  {
+    "id": 37263,
+    "title": "Not support for ubuntu 25",
+    "description": "### 🚀 Feature Request Please update as fast as possible ### Example _No response_ ### Motivation improve the performance and version supported",
+    "repo": "playwright",
+    "correctAnswer": "known-issue",
+    "stats": {
+      "comments": 1,
+      "votes": 0
+    }
+  },
+  {
+    "id": 37081,
+    "title": "beforeEach Sharing Storage State?",
+    "description": "### Version 1.54.1 ### Steps to reproduce Seeing some odd behavior, and it might be expected but I feel like it didn't do this before before. For instance in this scenario: [code block] Using the restful booker test site on the script above the singular test will but and be logged in already. However if I change it to another test: [code block] It will seemingly clear up between the tests, and the \"2nd\" test won't be logged in. ### Expected behavior I thought context was cleared in-between be...",
+    "repo": "playwright",
+    "correctAnswer": "known-issue",
+    "stats": {
+      "comments": 2,
+      "votes": 0
+    }
+  },
+  {
+    "id": 36903,
+    "title": "support API proxy",
+    "description": "### 🚀 Feature Request proxy configuration with what API endpoint (regex pattern) proxy to the actual endpoint. Proxy should not break the API mock. ### Example Hello, I have an app that build with Angular, Angular development server needs proxy config to make API calls to backend. Because PW does not support proxy config, every time I need to debug test on a dev server, I have to restart the dev server without proxy config, which is security disabled browser. Will PW support proxy in the futu...",
+    "repo": "playwright",
+    "correctAnswer": "known-issue",
+    "stats": {
+      "comments": 6,
+      "votes": 0
+    }
+  },
+  {
+    "id": 36887,
+    "title": "the click event won't be triggered if there are overlapped modal once",
+    "description": "### Version 1.49.1 ### Steps to reproduce 1, there is 1 Dialog (fluentUI component) in page with 2 buttons (1 is to open another dialog and 1 is to close this dialog) 2, click the button in this dialog to open the dialog2 3, click the close button in dialog2 4, try to click the close button using locator.click() in dialog1, it won't work. [FluentTest.txt]( [test.spec.txt]( ### Expected behavior the click event would work well ### Actual behavior the click event doesn't work well ### Additiona...",
+    "repo": "playwright",
+    "correctAnswer": "known-issue",
+    "stats": {
+      "comments": 1,
+      "votes": 0
+    }
+  },
+  {
+    "id": 36865,
+    "title": "Show developers the last line of code executed when timeout occurs",
+    "description": "### 🚀 Feature Request It'd be nice if users could see the last line of code that ran when a test times out. ### Example _No response_ ### Motivation In CI, for example, we just see [code block] It could save significant time debugging if we know the last line of code that ran when the test timed out.",
+    "repo": "playwright",
+    "correctAnswer": "known-issue",
+    "stats": {
+      "comments": 2,
+      "votes": 2
+    }
+  },
+  {
+    "id": 36844,
+    "title": "`performance.memory.usedJSHeapSize` returns same value all the time",
+    "description": "### Version 1.54.1 ### Steps to reproduce 1. I used the Playwright NodeJS template for Typescript: [code block] 2. I modified the `example.spec.ts` script like this: [code block] 3. I ran the test: `npx playwright test example --project=chromium` ### Expected behavior Each test prints a different value for memory usage: [code block] This only happens when using `--headed`. ### Actual behavior Same value of memory usage is returned in all tests: [code block] ### Additional context This is rele...",
+    "repo": "playwright",
+    "correctAnswer": "known-issue",
+    "stats": {
+      "comments": 2,
+      "votes": 0
+    }
+  },
+  {
+    "id": 36513,
+    "title": "When adding contextOptions: -> recordVideo: -> dir: while the video is set to off, videos are still generated",
+    "description": "### Version 1.53.0 ### Steps to reproduce Using the following still results in videos being generated: [code block] We are using the following for playwright testing: TS, JS, pnpm [code block] config for the playwright-bdd [code block] ### Expected behavior We expect that when we run `pnpm playwright test` when videos are set to `off` even with directory context options set, no videos are generated. ### Actual behavior As described, while the videos option is set to off and the directory opti...",
+    "repo": "playwright",
+    "correctAnswer": "known-issue",
+    "stats": {
+      "comments": 2,
+      "votes": 0
+    }
+  },
+  {
+    "id": 36351,
+    "title": "Playwright v1.51.1: locator.waitFor({ timeout }) unexpectedly waits for visibility",
+    "description": "### Version v1.51.1 ### Steps to reproduce import { test, expect } from '@playwright/test'; test('waitFor defaults to visible?', async ({ page }) => { await page.setContent('<input type=\"file\" style=\"display: none\">'); const locator = page.locator('input[type=\"file\"]'); // This should wait only for attachment await locator.waitFor({ timeout: 5000 }); // This should succeed even though hidden await locator.setInputFiles('README.md'); }); ### Expected behavior It should wait for element to be a...",
+    "repo": "playwright",
+    "correctAnswer": "known-issue",
+    "stats": {
+      "comments": 2,
+      "votes": 0
+    }
+  },
+  {
+    "id": 36315,
+    "title": "Missing some resources when saving as mhtml",
+    "description": "### Version 1.53.0 ### Steps to reproduce [code block] ### Expected behavior All resources must be output normally ### Actual behavior The generated MHTML file does not contain fonts, external CSS, or style sheets applied to the element ![Image]( ![Image]( ![Image]( ### Additional context _No response_ ### Environment [code block]",
+    "repo": "playwright",
+    "correctAnswer": "known-issue",
+    "stats": {
+      "comments": 3,
+      "votes": 0
+    }
+  },
+  {
+    "id": 36238,
+    "title": "Unable to disable \"Chrome is being controlled by automated test software\" message when using Playwright + Selenium Gr...",
+    "description": "### Version 1.52.0 ### Steps to reproduce 1. Configure the selenium grid with the hub and nodes 2. Configure a playwright script with the SELENIUM_REMOTE_URL on the top that connect to the selenium grid infrastructure and set a breakpoint to stop the execution before the browser closes 3. Enter selenium grid node through vnc 4. The \"Chrome is being controlled by automated test software\" infobar appears Important: Dont do playwright install to install the browsers because the browsers will be ...",
+    "repo": "playwright",
+    "correctAnswer": "known-issue",
+    "stats": {
+      "comments": 2,
+      "votes": 0
+    }
+  },
+  {
+    "id": 35920,
+    "title": "Default/documented timeouts for navigation and screenshots aren't being used by default",
+    "description": "### Version 1.52.0 ### Steps to reproduce 1. Clone my repo at 2. npm install 3. node index.mjs 4. You should see the error come up ### Expected behavior It should take a while to run (around 1-2 minutes on my machine) and succeed, given that Playwright has an unlimited timeout by default. ### Reference > **goto** > … > Maximum operation time in milliseconds. Defaults to `0` - no timeout… > > — ### Actual behavior I can the following error, indicating a 30-second timeout. [code block] The line...",
+    "repo": "playwright",
+    "correctAnswer": "known-issue",
+    "stats": {
+      "comments": 3,
+      "votes": 1
+    }
+  },
+  {
+    "id": 35461,
+    "title": "toMatchAriaSnapshot gets stuck when it needs to create a new file with timeout 0",
+    "description": "### Version 1.51.1 ### Steps to reproduce 1. Clone 2. npm i 3. npx playwright test --ui 4. Run the only test ### Expected behavior Playwright should create the new snapshot even if the timeout is 0 or very high and it should not get stuck. ### Actual behavior In this test playwright will get stuck at `await expect.soft(page.getByRole('navigation')).toMatchAriaSnapshot` [code block] Stopping the test will allow playwright to finally create the aria snapshot file, setting a small timeout (eg: 1...",
+    "repo": "playwright",
+    "correctAnswer": "known-issue",
+    "stats": {
+      "comments": 4,
+      "votes": 3
+    }
+  },
+  {
+    "id": 35304,
+    "title": "Visual snapshot file name has a trailing dash when the test name has a trailing special character",
+    "description": "### Version 1.50.1 ### Steps to reproduce 1. Create a visual snapshot test whose name has a trailing special character (`test('disabled=${false}')`). 2. Update the screenshot for that test. ### Expected behavior The screenshot's file name is `test-disabled-false.png`. ### Actual behavior The screenshot's file name is `test-disabled-false-.png`. ### Additional context _No response_ ### Environment [code block]",
+    "repo": "playwright",
+    "correctAnswer": "known-issue",
+    "stats": {
+      "comments": 4,
+      "votes": 1
+    }
+  },
+  {
+    "id": 35230,
+    "title": "Performance is not defined",
+    "description": "### Version In Playwright version: 1.48.1 I do not seeing the error while building the docker image but I see the error after deploying ### Steps to reproduce We have a meteor application with version meteor 2.7 where we have functionality of pdf generation. The application is running locally I have to build a docker image for deploying we have a command npx playwright install While running this command I am seeing the below error [12/40] RUN npx playwright install: 0.898 BEWARE: your OS is n...",
+    "repo": "playwright",
+    "correctAnswer": "known-issue",
+    "stats": {
+      "comments": 1,
+      "votes": 0
+    }
+  },
+  {
+    "id": 35216,
+    "title": "Can't launch two Firefox contexts",
+    "description": "### Version 1.50.0 (Playwright for .NET) ### Steps to reproduce [code block] ### Expected behavior There are no errors after the execution is completed ### Actual behavior When executing on second `playwright.Firefox.LaunchPersistentContextAsync`, - First, Firefox pops up the error window: `Firefox is already running, but is not responding. The old Firefox process must be closed to open a new window.` ![Image]( - Then, playwright throw the exception: `TargetClosedException`. details: [code bl...",
+    "repo": "playwright",
+    "correctAnswer": "known-issue",
+    "stats": {
+      "comments": 1,
+      "votes": 0
+    }
+  },
+  {
+    "id": 34934,
+    "title": "Chrome Mobile Emulation Exceeds Viewport Size",
+    "description": "### Version 1.50.1 ### Steps to reproduce 1. Set up a Playwright project with the following configuration in playwright.config.js: [code block] 2. Create a simple test in tests/viewport.spec.js: [code block] 3. Run the test using: `npx playwright test --project=\"Chrome on Pixel 7\"` ### Expected behavior The browser window should match the viewport ### Actual behavior the browser window is larger then the viewport ### Additional context _No response_ ### Environment [code block]",
+    "repo": "playwright",
+    "correctAnswer": "known-issue",
+    "stats": {
+      "comments": 1,
+      "votes": 0
+    }
+  },
+  {
+    "id": 34863,
+    "title": "HAR recording only captures last page in pages array",
+    "description": "### Version 1.50.1 ### Steps to reproduce ## Bug Description When recording a HAR file using `recordHar`, the HAR file's `pages` array only contains the last visited page, even though multiple pages were visited. The `entries` array correctly contains all network requests. ## Repro Steps 1. Create a new context with HAR recording enabled 2. Navigate to multiple different URLs 3. Close context and examine HAR file ## Code to Reproduce [code block]shell System: OS: macOS 15.3.1 CPU: (12) x64 In...",
+    "repo": "playwright",
+    "correctAnswer": "known-issue",
+    "stats": {
+      "comments": 10,
+      "votes": 1
+    }
+  },
+  {
+    "id": 34392,
+    "title": "field `matcherResult` is missing in erros in JSON reports",
+    "description": "### Version 1.49.1 ### Steps to reproduce [code block] The JSON report is written to `test-results.json` ### Expected behavior Every spec in the JSON report contains an array of test results, each with both an `error` and an `errors` key. As per the [documentation]( I expect `error` to be the same as the first element of `errors`. I also expect each error in `errors` to contain complete information about what went wrong. ### Actual behavior Only the error in `error` contains `matcherResult` a...",
+    "repo": "playwright",
+    "correctAnswer": "known-issue",
+    "stats": {
+      "comments": 1,
+      "votes": 1
+    }
+  },
+  {
+    "id": 34373,
+    "title": "page.waitForResponse in html report and trace viewer is displayed where it's defined not where it's awaited",
+    "description": "### Version latest ### Steps to reproduce 1. Clone my repo at 2. npm install 3. npx playwright test 4. Once test runs sucessfully, open report by npx playwright show-report 5. Open trace viewer from the report ### Expected behavior I expect that page.waitForResponse is displayed where it's awaited not where it's defined in html report and trace viewer. ### Actual behavior page.waitForResponse in html report and trace viewer is displayed where it's defined not where it's awaited (This has disc...",
+    "repo": "playwright",
+    "correctAnswer": "known-issue",
+    "stats": {
+      "comments": 1,
+      "votes": 0
+    }
+  },
+  {
+    "id": 34192,
+    "title": "Cannot transfer files larger than 50Mb to a browser not co-located with the server",
+    "description": "### Version 1.49.0 ### Steps to reproduce I am confident that this is a problem with Playwright, with the same browser and environment. The same CDP is used, but Puppet is fine, but Playwright is not。Please take this issue seriously Here is my code： return await Puppeteer.ConnectAsync(new ConnectOptions() { BrowserWSEndpoint = endpointURL, DefaultViewport = null }); playwright not： return await playwright.Chromium.ConnectOverCDPAsync( wsEndpointUrl, new BrowserTypeConnectOverCDPOptions { Time...",
+    "repo": "playwright",
+    "correctAnswer": "known-issue",
+    "stats": {
+      "comments": 13,
+      "votes": 4
+    }
+  },
+  {
+    "id": 34162,
+    "title": "[Docs]: specify that playwright does not support negation in url matching glob patterns",
+    "description": "### Page(s) Page to be updated: Other pages where it may be worth considering a link to the page above or other documentation on what glob patterns are supported: - - - ### Description Glob patterns used in playwright methods (e.g. `page.route`) do not appear to support negation. For example: [code block] Suggested change would be to add a line on [Network: Glob URL Patterns]( e.g. under \"Important notes\" to state something like \"The negation operator (`!`) is not currently supported\" or \"Ope...",
+    "repo": "playwright",
+    "correctAnswer": "known-issue",
+    "stats": {
+      "comments": 1,
+      "votes": 2
+    }
+  },
+  {
+    "id": 33974,
+    "title": "Behavior of `maxFailures` with last-run.json and CI Test Reruns with `--last-failed`",
+    "description": "### Version 1.49.1 ### Steps to reproduce I encountered an issue while using Playwright with the `maxFailures` configuration in our CI pipeline. Here's the scenario: 1. We have `maxFailures` set to 3. 2. When running 70 tests, if the 4th test fails 3 times, Playwright stops execution as per the `maxFailures` threshold. 3. The `last-run.json` file then only contains information about the failed tests (in this case, the 4th test). 4. When rerunning the job with the `--last-failed` flag, Playwri...",
+    "repo": "playwright",
+    "correctAnswer": "known-issue",
+    "stats": {
+      "comments": 2,
+      "votes": 0
+    }
+  },
+  {
+    "id": 33971,
+    "title": "Add ability to validate PDF file contents by loading it into the browser or any other means. User should be able to a...",
+    "description": "### 🚀 Feature Request Many products in the market has functionality to generate report from their application. This report could be in PDF format or CSV/Excel. Although Playwright is browser automation tool, it would be very helpful if Playwright also supports ability to validate PDF contents. User should be able to assert text elements on PDF, presence of images/icons, CSS properties for any element. Also it would be nice if in-built mechanism to validate CSV/Excel content is also provided. ...",
+    "repo": "playwright",
+    "correctAnswer": "known-issue",
+    "stats": {
+      "comments": 1,
+      "votes": 0
+    }
+  },
+  {
+    "id": 33863,
+    "title": "HTML reporter does not properly detect output folder clash",
+    "description": "### Version 1.49.0 ### Steps to reproduce Run any Playwright project with the following reporter config: [code block] Output (note error is from 2nd reporter, not 1st): [code block] ### Expected behavior First reporter should log the error because it does overwrite the output folder. Second reporter should not log the error because it does not overwrite the output folder. ### Actual behavior First reporter does not log error and overwrites output folder. Second reporter does log error but doe...",
+    "repo": "playwright",
+    "correctAnswer": "known-issue",
+    "stats": {
+      "comments": 3,
+      "votes": 0
+    }
+  },
+  {
+    "id": 33847,
+    "title": "Chrome is automatically getting closed in the middle if any testcase got failed",
+    "description": "### Version 1.49.0 ### Steps to reproduce Issue: Lets say I have 10 testcases. During the execution, for some reason testcase#5 failed and now its closing the crome and opening the new one to execute the testcase#6. ### Expected behavior It should execute testcase #6 from the same chrome where testcase#5 left instead of closing it. Its working like this in Playwright python and facing the issue with Playwright Js ### Actual behavior Its closing the chrome if any testcase got failed which is a...",
+    "repo": "playwright",
+    "correctAnswer": "known-issue",
+    "stats": {
+      "comments": 4,
+      "votes": 0
+    }
+  },
+  {
+    "id": 33837,
+    "title": "Clock API prevents running intervals from being cleared",
+    "description": "### Version 1.49.0 ### Steps to reproduce General case: 1. Call `setInterval` in the page 2. Use `context.clock.install()` or `context.clock.runFor()` 3. Call `clearInterval` in the page 4. Interval continues to tick You could clone to have a repro case 1. Clone the repo 2. `yarn` 3. `yarn test` or `yarn test:ui` 4. See two tests where `context.clock` is used failing ### Expected behavior `clearInterval` works as usual and stops currently running interval even after Clock API is used ### Actu...",
+    "repo": "playwright",
+    "correctAnswer": "known-issue",
+    "stats": {
+      "comments": 5,
+      "votes": 2
+    }
+  },
+  {
+    "id": 33857,
+    "title": "WebKit tests significantly slower when using forms",
+    "description": "### Version 1.49.0 ### Steps to reproduce steps: 1. Clone the repository from 2. Run the `Create_Individual ` test with 50 iterations. 3. Observe the difference in execution time between Chromium and Webkit. ![Image]( I’ve also experimented with other tests, such as loading weather data from the Blazor example app. However, in these tests, no significant performance discrepancies were observed. It appears that using forms has a notable performance impact on Webkit, but this is just my assumpt...",
+    "repo": "playwright",
+    "correctAnswer": "known-issue",
+    "stats": {
+      "comments": 4,
+      "votes": 0
+    }
+  },
+  {
+    "id": 33765,
+    "title": "Support forcedColors emulation for Firefox, Safari, and WebKit",
+    "description": "### 🚀 Feature Request ### Problem Currently, Playwright's `forcedColors` emulation is only supported in Chromium-based browsers. This prevents visual regression and accessibility tests in high-contrast mode from running on Firefox, Safari, and WebKit. Moreover, macOS and iOS do not natively support a system-wide forced colors equivalent like Windows' High Contrast mode, making this a significant limitation for these platforms. ### Use Case Our tests require high-contrast mode to verify that t...",
+    "repo": "playwright",
+    "correctAnswer": "known-issue",
+    "stats": {
+      "comments": 4,
+      "votes": 0
+    }
+  },
+  {
+    "id": 29460,
+    "title": "Playwright takes long time to close browser",
+    "description": "### Version 1.41.2 ### Steps to reproduce Dotnet: In Hooks.cs in [AfterScenario] binding I close page, contexts, browser and playwright. When using Edge or Chrome in headless=false, closing browser takes 30000-38000 ms. Closing Chromium takes 2000-3000 ms. In ticket #27679 @yury-s suggested, that this may be due to corporate policies imposed on browser and requested for logs. This happends in headed mode (headless=false) ### Expected behavior Closing Edge / Chrome in 2-3 seconds or not much l...",
+    "repo": "playwright",
+    "correctAnswer": "known-issue",
+    "stats": {
+      "comments": 2,
+      "votes": 1
+    }
+  },
+  {
+    "id": 28143,
+    "title": "`getByRole` is 1.5x slower than CSS selectors",
+    "description": "`getByRole` is 1.5x slower than CSS selectors. Probably, because [`getByRole` uses of `querySelectorAll('*')` and matches elements by the accessible name]( [code block] I [debugged `getByRole` internals]( but haven't profiled yet. I can profile and optimize the code if it's important for the community to improve the \"smart\" locators performance.",
+    "repo": "playwright",
+    "correctAnswer": "known-issue",
+    "stats": {
+      "comments": 3,
+      "votes": 1
+    }
+  },
+  {
+    "id": 37536,
+    "title": "Playwright Java cannot connect to CDP without Node/driver-bundle",
+    "description": "### Version 1.55.0 ### Steps to reproduce **Description :** When using Playwright Java in remote/CDP-only scenarios, it is not possible to avoid the Node-based driver or the driver-bundle. Even when providing a custom driver via `playwright.driver.impl`, `Playwright.create()` still attempts to spawn the Node driver, resulting in failures if the driver-bundle is not present. The driver-bundle is around 200 MB, which is a heavy dependency for users who only need to connect to a remote browser o...",
+    "repo": "playwright",
+    "correctAnswer": "known-issue",
+    "stats": {
+      "comments": 1,
+      "votes": 0
+    }
+  },
+  {
+    "id": 37766,
+    "title": "WebKit crashes after page reload in 1.56",
+    "description": "Version 1.56 Steps to reproduce Run npx playwright wk https://playwright.dev Click on \"Get started\" Press F5 (page reload) multiple times After a few attempts the browser crashes Expected behavior No crash Actual behavior Browser crashes Additional context It happens even with our web app in E2E tests (CodeceptJS + Playwright), tested with the head...",
+    "repo": "playwright",
+    "correctAnswer": "bug",
+    "stats": {
+      "comments": 12,
+      "votes": 10
+    }
+  },
+  {
+    "id": 36371,
+    "title": "locator.check: Clicking the checkbox did not change its state",
+    "description": "Version ^1.53.0 Steps to reproduce Clone my repo at https://github.com/artsiom-voitas/playwright-check-fail npm install npm run playwright_install npm run dev npm run playwright_test Expected behavior Expected to check checkbox / radio input. Actual behavior Error: locator.check: Clicking the checkbox did not change its state Call log: waiting for ...",
+    "repo": "playwright",
+    "correctAnswer": "bug",
+    "stats": {
+      "comments": 14,
+      "votes": 1
+    }
+  },
+  {
+    "id": 36225,
+    "title": "Playwright unit tests are setting cross-site cookies with \"SameSite=None\" but miss \"Secure\" to be set",
+    "description": "Version latest main Steps to reproduce Note that several Playwright tests currently set cross-site cookies with the SameSite=None attribute but miss to as well set the Secure attribute. Due to a recent change in Firefox Nightly this is not allowed anymore and as such those tests are failing. One example can be found in browsercontext-clearcookies.s...",
+    "repo": "playwright",
+    "correctAnswer": "bug",
+    "stats": {
+      "comments": 11,
+      "votes": 1
+    }
+  },
+  {
+    "id": 36148,
+    "title": "Load event never fires (goto hangs)",
+    "description": "Version 1.52.0 Steps to reproduce This is only reproducible in certain linux environments for me. I'm running on a mcr.microsoft.com/playwright:v1.52.0-jammy pod deployed into GKE. I can't seem to reproduce on GitHub Actions ubuntu machines. install playwright 1.52.0 npx tsx test.ts with this code: Expected behavior The code should complete and exi...",
+    "repo": "playwright",
+    "correctAnswer": "bug",
+    "stats": {
+      "comments": 5,
+      "votes": 7
+    }
+  },
+  {
+    "id": 35264,
+    "title": "playwright mcp package installation issue -- Cannot find module './lib/servers/snapshot'",
+    "description": "Version Version 1.42.1 Steps to reproduce npm install --save-exact @playwright/mcp@1.52.0-alpha-2025-03-14 -- Looks installation is fine npm warn deprecated @playwright/test@1.42.1: Please update to the latest version of Playwright to test up-to-date browsers. added 3 packages, changed 1 package, and audited 96 packages in 3s 16 packages are lookin...",
+    "repo": "playwright",
+    "correctAnswer": "bug",
+    "stats": {
+      "comments": 14,
+      "votes": 7
+    }
+  },
+  {
+    "id": 37133,
+    "title": "test.slow() Not working as intended",
+    "description": "Version 1.55.0 Steps to reproduce 1.Initialize a new playwright project with pnpm create playwright 2.Change the playwright.timeout in the configuration to 100 to make it easier to test bug 3.Change the test has title to: Expected behavior I expect all three browsers to use the same 300ms when test.slow is used. Actual behavior Firefox and webkit s...",
+    "repo": "playwright",
+    "correctAnswer": "bug",
+    "stats": {
+      "comments": 7,
+      "votes": 0
+    }
+  },
+  {
+    "id": 36714,
+    "title": "Launching UI Mode on Windows from Administrator Shell Crashes",
+    "description": "Edit from maintainers Please update to v1.54.2 - this will fix it. Version 1.46.0 Steps to reproduce Open a Playwright repository on Windows (can use the Playwright example repo) npm i Open an administrator command prompt Launch UI mode npx playwright test --ui Things work as expected (assuming the version stays at 1.45) Upgrade playwright version ...",
+    "repo": "playwright",
+    "correctAnswer": "bug",
+    "stats": {
+      "comments": 13,
+      "votes": 4
+    }
+  },
+  {
+    "id": 36522,
+    "title": "`Pick locator` and `Record at cursor` tools not working, hanging on `about:blank` page",
+    "description": "<!-- Failed to upload \"Gravação de Tela 2025-07-01 às 23.45.58.mp4\" --> Version 1.53.2 Steps to reproduce Open VsCode on a project with Playwright Open a Playwright test and put the cursor on any line of the code Click either Pick locator or Record at cursor A blank page is opened and you can't use the feature because your page nor your test ste...",
+    "repo": "playwright",
+    "correctAnswer": "bug",
+    "stats": {
+      "comments": 6,
+      "votes": 0
+    }
+  },
+  {
+    "id": 35706,
+    "title": "1.52.0 hangs on \"load tests\" started or crush with out of memory",
+    "description": "Version 1.52.0 Description Playwright version 1.52.0 hangs when running tests or stops with out of memory when using --ui, while 1.51.1 works fine. Logs without ui(hangs): Logs that I somehow managed to copy before crush with --ui Screenshots(is it supposed to have so many slashes?): !Image !Image Expected behavior Tests should run fine. Actual beh...",
+    "repo": "playwright",
+    "correctAnswer": "bug",
+    "stats": {
+      "comments": 11,
+      "votes": 2
+    }
+  },
+  {
+    "id": 37874,
+    "title": "UI does not change theme whenever system changes theme",
+    "description": "Version 1.56.0 Steps to reproduce Have system theme set to white Go to https://trace.playwright.dev/ Change system theme to dark (or simulate prefers-color-scheme change via chrome devtools) Expected behavior Playwright theme to changed to dark-mode Actual behavior Playwright theme stays in light-mode Additional context An event listener should be ...",
+    "repo": "playwright",
+    "correctAnswer": "bug",
+    "stats": {
+      "comments": 5,
+      "votes": 0
+    }
+  },
+  {
+    "id": 37306,
+    "title": "`--update-snapshots changed` is adding missing screenshots",
+    "description": "Version 1.55.0 Steps to reproduce Write some screenshot tests (screenshot tests vs snapshot tests, I am talking about screenshot tests) Run tests for the first time to generate screenshots, tests will fail at this point because there were no screenshots before running this command Delete all screenshots by deleting __snapshots__ folder Run test wit...",
+    "repo": "playwright",
+    "correctAnswer": "bug",
+    "stats": {
+      "comments": 5,
+      "votes": 0
+    }
+  },
+  {
+    "id": 37068,
+    "title": "waitForURL Doesn't Account for Query Parameters",
+    "description": "Version 1.53.2 Steps to reproduce Select option which triggers URL update with new/changed query parameter. Expected behavior waitForURL resolves once the URL matches the pattern I provided. Actual behavior The URL changes to https://localhost:3000/?layout=grid but the runner just sits there and never resolves. Additional context _No response_ Envi...",
+    "repo": "playwright",
+    "correctAnswer": "bug",
+    "stats": {
+      "comments": 5,
+      "votes": 0
+    }
+  },
+  {
+    "id": 36711,
+    "title": "Sporadic `NSRangeException` for WebKit targets in headless mode on self-hosted GitHub runner",
+    "description": "Version 1.53.0 Steps to reproduce I don't think there's a way for others to reproduce this, since it's likely specific to our own self-hosted runner, but I've created a minimal reproducable example at https://github.com/Palringo/playwright-nsrangeexception-repro regardless. The e2e workflow will run on push to main, and can be changed between self-...",
+    "repo": "playwright",
+    "correctAnswer": "bug",
+    "stats": {
+      "comments": 9,
+      "votes": 3
+    }
+  },
+  {
+    "id": 35439,
+    "title": "WebKit 18.4: `document.cookie` returns empty string in iframe despite cookie being present in HTTP requests",
+    "description": "Version 1.51.1 Steps to reproduce Clone the repository at https://github.com/jhogervorst/playwright-webkit-iframe-cookie-issue Run npm install Start the server: npm run server Run the tests: npm test The test will fail specifically for WebKit 18.4 on Linux, while passing for all other browsers and platforms Expected behavior When a cookie is set on...",
+    "repo": "playwright",
+    "correctAnswer": "bug",
+    "stats": {
+      "comments": 22,
+      "votes": 11
+    }
+  },
+  {
+    "id": 35140,
+    "title": "Chrome crash running on jenkins when channel == chromium",
+    "description": "Version 1.51.0 Steps to reproduce You'll need a jenkins installation to reproduce the bug. Just create a jenkins job that clone the following repository https://github.com/Daemos87/playwright-chromium-crash-repro and run the jenkinsfile in it. Expected behavior Chromium browser should run just fine in headless mode when channel = chromium also, rem...",
+    "repo": "playwright",
+    "correctAnswer": "bug",
+    "stats": {
+      "comments": 11,
+      "votes": 1
+    }
+  },
+  {
+    "id": 37861,
+    "title": "Accept local-network-access permission",
+    "description": "_Originally posted in #37769_ Starting with Chrome 141.0.7390.16 (Playwright 1.56.0-alpha-2025-09-12), we are experiencing CORS issues like the following: This is _not_ a Playwright issue, rather, it is a new Chrome feature called Local Network Access prompts. In addition to our test execution failures on 1.56.0, some of our engineers also began se...",
+    "repo": "playwright",
+    "correctAnswer": "bug",
+    "stats": {
+      "comments": 9,
+      "votes": 13
+    }
+  },
+  {
+    "id": 36102,
+    "title": "toHaveAccessibleErrorMessage fails for file inputs (regression between 1.51.0 and 1.52.0)",
+    "description": "Version 1.52.0 Steps to reproduce Clone https://github.com/MattyBalaam/file-input-error-message $ npm install $ npm run test See test failure on file input on line 31 of app/index.html change to type=\"file\" All tests pass Expected behavior The error message should be found Actual behavior Additional context Downgrade to v1.51.0 and it works as expe...",
+    "repo": "playwright",
+    "correctAnswer": "bug",
+    "stats": {
+      "comments": 3,
+      "votes": 2
+    }
+  },
+  {
+    "id": 35362,
+    "title": "Unexpected timeout when .clock() is used",
+    "description": "Version 1.51.0 Steps to reproduce Clone the repository https://github.com/tetiana-kolos/pw-repro Open the file ClockBug.spec.ts I. _For Test ONE:_ Run the Test ONE in the debug mode (--debug) Try to inspect elements during page.pause() II. _For Test TWO:_ Run Test TWO in the ui mode Expected behavior I. _For Test ONE:_ The test is PASSED without ha...",
+    "repo": "playwright",
+    "correctAnswer": "bug",
+    "stats": {
+      "comments": 4,
+      "votes": 0
+    }
+  },
+  {
+    "id": 37769,
+    "title": "Playwright 1.56 no longer sends Origin header, breaking CORS-dependent requests",
+    "description": "Version 1.56 Steps to reproduce After upgrading Playwright from 1.55 → 1.56, several UI tests started failing. In Playwright 1.55, the browser automatically included the Origin header in network requests, which matched our backend CORS configuration. Starting from 1.56, this header is no longer sent — as a result, the backend now rejects the reques...",
+    "repo": "playwright",
+    "correctAnswer": "bug",
+    "stats": {
+      "comments": 24,
+      "votes": 6
+    }
+  },
+  {
+    "id": 37295,
+    "title": "BrowserContext setOffline does not work in Firefox",
+    "description": "Version 1.55.0 Steps to reproduce Clone my repo (https://github.com/JoepKockelkorn/playwright-firefox-setoffline-bug) Install correct node version from .nvmrc Run npm install Run npm run test Expected behavior I expect the test to succeed in Firefox. In Chrome it succeeds. Actual behavior The test fails, the offline (and online) event is never fire...",
+    "repo": "playwright",
+    "correctAnswer": "bug",
+    "stats": {
+      "comments": 11,
+      "votes": 6
+    }
+  },
+  {
+    "id": 36841,
+    "title": "Playwright Java hangs during page.navigate() without timeout or error in production",
+    "description": "Version 1.49.0 Steps to reproduce I'm using Playwright Java to take full-page screenshots. It works as expected in most cases, but in some specific cases in production, the process hangs indefinitely during navigation and screenshot capture. Even though I've set timeouts on page.navigate() and page.waitForLoadState(...), the Playwright thread never...",
+    "repo": "playwright",
+    "correctAnswer": "bug",
+    "stats": {
+      "comments": 3,
+      "votes": 0
+    }
+  },
+  {
+    "id": 36339,
+    "title": "Click fails in 1.53 where it previously passed",
+    "description": "Version 1.53.0 Steps to reproduce I am not sure what is the root cause, hence I cannot make a repro (this is on private repo). However, I will try to provide maximum information. Trying to click an element produces the following log: however the intercepting element is in fact a parent. The locator is: page.locator('more-page').locator('yoo-mobile-...",
+    "repo": "playwright",
+    "correctAnswer": "bug",
+    "stats": {
+      "comments": 18,
+      "votes": 6
+    }
+  },
+  {
+    "id": 35846,
+    "title": "\"npm run watch\" takes up to 20% CPU load all the time while waiting for changes",
+    "description": "Version 1.53.0-next Steps to reproduce To reproduce just call npm run watch and wait until the initialization and the first compilation (if needed) is done. Then observe the CPU load in an activity / process monitor. Expected behavior All esbuild processes should consume nearly no CPU while waiting for changes. Actual behavior The following image s...",
+    "repo": "playwright",
+    "correctAnswer": "bug",
+    "stats": {
+      "comments": 3,
+      "votes": 1
+    }
+  },
+  {
+    "id": 34504,
+    "title": "update snapshots not creating good diffs",
+    "description": "Version 1.51.0-alpha-2025-01-22 Steps to reproduce create the follwing test: run test using the play button in vscode extension run 'git apply test-results/rebaselines.patch' change the page source so snapshots will differ. This is done by modifying the movie id. The code snippet below shows a goto with a url containing a different id. Use this sni...",
+    "repo": "playwright",
+    "correctAnswer": "bug",
+    "stats": {
+      "comments": 3,
+      "votes": 0
+    }
+  },
+  {
+    "id": 37147,
+    "title": "[Regression]: Internal error: step id not found",
+    "description": "Last Good Version 1.54 First Bad Version 1.55 Steps to reproduce Create a fixture with box: true that calls test.attach(): Run tests npx playwright test Reproduction repo: https://github.com/vitalets/playwright-issues/tree/error-step-id-not-found Expected behavior Attachment is added, no errors in the output. Actual behavior Attachment is added, bu...",
+    "repo": "playwright",
+    "correctAnswer": "bug",
+    "stats": {
+      "comments": 18,
+      "votes": 5
+    }
+  },
+  {
+    "id": 35757,
+    "title": "Python: await page.route() hangs indefinitely on macOS with pytest",
+    "description": "Version 1.51.0 Steps to reproduce Code Snippet Libraries Used: pytest: 8.3.5 pytest-asyncio: 0.26.0 pytest-playwright: 0.7.0 Steps to Reproduce: Set up a Python 3.11 environment on macOS. Install the required libraries: pip install \"pytest==8.3.5\" \"pytest-asyncio==0.26.0\" \"pytest-playwright==0.7.0\" \"playwright==1.51.0\" Run playwright install. Save ...",
+    "repo": "playwright",
+    "correctAnswer": "bug",
+    "stats": {
+      "comments": 2,
+      "votes": 0
+    }
+  },
+  {
+    "id": 35269,
+    "title": "[Regression]: Webkit on linux doesn't see iframe cookies",
+    "description": "Version 1.51.1 Steps to reproduce make sure you are on linux clone my repo https://github.com/Smrtnyk/PW-repros checkout the \"cookies\" branch run the cookies test Expected behavior It should pass on webkit on linux, just like chromium and firefox pass. Actual behavior It fails on webkit only and only on linux. On windows this test works just fine. ...",
+    "repo": "playwright",
+    "correctAnswer": "bug",
+    "stats": {
+      "comments": 11,
+      "votes": 5
+    }
+  },
+  {
+    "id": 34693,
+    "title": "Issue with Playwright 1.50.1 on macOS 15.3 (Sequoia) - Page closes unexpectedly in non-headless mode",
+    "description": "Version 1.50.1 Steps to reproduce After upgrading to macOS 15.3 (Sequoia), I began encountering an issue where Playwright fails when launching Chromium in non-headless mode. Specifically, I am seeing the following error: swift Copy Edit Failed to create browser context or page: Error { message='Page closed name='Error stack='Error: Page closed at F...",
+    "repo": "playwright",
+    "correctAnswer": "bug",
+    "stats": {
+      "comments": 16,
+      "votes": 4
+    }
+  },
+  {
+    "id": 34490,
+    "title": "WebKit on Linux doesn't load Content-Length 0 JavaScript resource",
+    "description": "Version 1.49.0 Steps to reproduce The application does not load in Safari when run inside a Docker container. A console error is shown, and the page fails to render. docker pull mcr.microsoft.com/playwright:v1.49.0 Create test Run the test inside container in Safari browser docker run -it --rm --ipc=host mcr.microsoft.com/playwright:v1.49.0 /bin/ba...",
+    "repo": "playwright",
+    "correctAnswer": "bug",
+    "stats": {
+      "comments": 12,
+      "votes": 4
+    }
+  },
+  {
+    "id": 38354,
+    "title": "locator.getAttribute() hangs indefinitely when hidden loader element remains in DOM during backend activity",
+    "description": "Version 1.52.0 Steps to reproduce When a page keeps a hidden <div class=\"loader\"> element in the DOM during a backend operation (even when it's 0×0 and not visible), Playwright never returns from: locator.getAttribute(\"class\") It seems internal actionability/wait-for-stability logic is waiting for DOM stability that never comes, causing the test to...",
+    "repo": "playwright",
+    "correctAnswer": "bug",
+    "stats": {
+      "comments": 1,
+      "votes": 0
+    }
+  },
+  {
+    "id": 37867,
+    "title": "VS Code Extension Test Run Hangs Indefinitely with Async onExit in Custom Reporter",
+    "description": "Version 1.56.0 Steps to reproduce Clone my repo: https://github.com/aslushnikov/repo-pw-custom-report-vscode-extension-bug npm install code . to open vscode run test from vscode run test the second time (will not work) Expected behavior Tests can be run the second time. Actual behavior Unable to run tests for the second time. Additional context I'm...",
+    "repo": "playwright",
+    "correctAnswer": "bug",
+    "stats": {
+      "comments": 6,
+      "votes": 0
+    }
+  },
+  {
+    "id": 37771,
+    "title": "HTML reporter crashes in browser when test annotation has missing or non-string type",
+    "description": "Version v1.56.0 Steps to reproduce Create a test file: Run the test with HTML reporter: Open the generated HTML report: Check console: Expected behavior The HTML report should always open - it should never crash at such a late in the browser regardless of what annotation data is provided The type system should not promise type: string if the runtim...",
+    "repo": "playwright",
+    "correctAnswer": "bug",
+    "stats": {
+      "comments": 1,
+      "votes": 0
+    }
+  },
+  {
+    "id": 37495,
+    "title": "[internal] migrate to NPM Publishing via OIDC",
+    "description": "https://github.blog/changelog/2025-07-31-npm-trusted-publishing-with-oidc-is-generally-available/ [x] microsoft/playwright-mcp [x] microsoft/playwright-vscode [x] microsoft/playwright We publish there from two yaml files (canary/stable) - waiting for them to provide us an update if that is supported or we need to merge them.",
+    "repo": "playwright",
+    "correctAnswer": "bug",
+    "stats": {
+      "comments": 1,
+      "votes": 0
+    }
+  },
+  {
+    "id": 37236,
+    "title": "Playwright doesn't respect DISPLAY for rendering to framebuffer",
+    "description": "Version v1.55.0 Steps to reproduce Install Playwright v1.55.0. Launch Xvfb and set DISPLAY. Launch (not headless) Chromium browser via Playwright. Expected behavior I expect the browser window to be rendered on the framebuffer. Actual behavior The browser window is rendered to the screen. Additional context I am using Python. This worked for v1.52....",
+    "repo": "playwright",
+    "correctAnswer": "bug",
+    "stats": {
+      "comments": 12,
+      "votes": 2
+    }
+  },
+  {
+    "id": 36412,
+    "title": "Playwright frequently fails to download Chromium",
+    "description": "Version I believe latest -- via playwright-mcp 0.0.29 Steps to reproduce Enable the Playwright MCP server in a host, such as GitHub Copilot coding agent. Coding agent docs: https://docs.github.com/en/copilot/using-github-copilot/coding-agent Enabling playwright: https://docs.github.com/en/copilot/using-github-copilot/coding-agent/extending-copilot-...",
+    "repo": "playwright",
+    "correctAnswer": "bug",
+    "stats": {
+      "comments": 18,
+      "votes": 3
+    }
+  },
+  {
+    "id": 35984,
+    "title": "Data type was changed by playwright",
+    "description": "Version 1.52.0 Steps to reproduce Step to reproduce Create an Endpoint in Hono fakeApi.post(\"/api/v1/fake-api\", async (c) => { ... }) the 'c.json()' will be parsed by zod with type constroller.ts fakeapi.model.ts Do a request using axios Check the body, the code will be turned into string \"200\" Expected behavior The data type should be number inste...",
+    "repo": "playwright",
+    "correctAnswer": "bug",
+    "stats": {
+      "comments": 1,
+      "votes": 0
+    }
+  },
+  {
+    "id": 35928,
+    "title": "connect_over_cdp getting stuck",
+    "description": "Version 1.52.0 Steps to reproduce Steps: Launch Microsoft Edge in debugging mode with custom user profile: Run minimal code example: Expected behavior connect_over_cdp to finish \"connected\" to print Actual behavior connect_over_cdp times out Code never completes connect_over_cdp times out even though the websocket connected: Additional context This...",
+    "repo": "playwright",
+    "correctAnswer": "bug",
+    "stats": {
+      "comments": 16,
+      "votes": 2
+    }
+  },
+  {
+    "id": 35586,
+    "title": "[internal]: WebKit crash in dri2_wl_swrast_put_image2 on Ubuntu 22.04",
+    "description": "Stacktrace: Investigation: Segfaults here Happens consistently on Ubuntu 22.04 - not on 24.04 Repro WKPATH=../playwright-browsers/browser_patches/webkit/pw_run.sh DEBUG=pw:browser xvfb-run npm run wtest -- screenshot:44 --repeat-each 2000 -x Happens with MESA version 23.2.1 (Ubuntu 22.04 version) and 24.0.5 (Ubuntu 24.04 version - compiled manually...",
+    "repo": "playwright",
+    "correctAnswer": "bug",
+    "stats": {
+      "comments": 1,
+      "votes": 0
+    }
+  },
+  {
+    "id": 35290,
+    "title": "chromium is not opening in incognito mode",
+    "description": "Hello team, I am trying to automate website using python playwright framework. while log in to the website, i have created new browser context but it is not opening incognito mode. because of this, it is automatically redirecting to my personal account and test is failing. i have tried all the browser options. how can i open incognito mode explicit...",
+    "repo": "playwright",
+    "correctAnswer": "bug",
+    "stats": {
+      "comments": 12,
+      "votes": 2
+    }
+  },
+  {
+    "id": 35162,
+    "title": "cannot resolve import from `next-intl/navigation`",
+    "description": "Version 1.51.0 Steps to reproduce clone the reproduction at https://github.com/stefanprobst/issue-playwright-bundler pnpm install pnpm test see error message: Expected behavior playwright should be able to resolve imports from next-intl/navigation Actual behavior playwright cannot resolve imports from next-intl/navigation and errors with: it looks ...",
+    "repo": "playwright",
+    "correctAnswer": "bug",
+    "stats": {
+      "comments": 9,
+      "votes": 5
+    }
+  },
+  {
+    "id": 35065,
+    "title": "Fix WebKit crash with Tracing tests",
+    "description": "Reproduces consistently on our secondary tests. Looks like it started happening when we switched to Ubuntu 22 for the tracing tests which means before we were running a frozen WebKit version for the tracing tests. Repro: PWTEST_TRACE=1 npm run wtest library/page-event-crash.spec.ts:39?",
+    "repo": "playwright",
+    "correctAnswer": "bug",
+    "stats": {
+      "comments": 1,
+      "votes": 0
+    }
+  },
+  {
+    "id": 34928,
+    "title": "Unable generate trace in playwright codegen v1.50",
+    "description": "Version 1.50 Steps to reproduce The \"save trace\" option was available in the codegen feature up to Playwright version 1.49 but is missing in version 1.50. Interestingly, there is no mention of its removal in the release notes. This omission has left users uncertain whether it was an intentional change or an oversight. If this feature had been depre...",
+    "repo": "playwright",
+    "correctAnswer": "bug",
+    "stats": {
+      "comments": 1,
+      "votes": 0
+    }
+  },
+  {
+    "id": 38273,
+    "title": "Playwright driver CDN responds with HTTP 400, `GatewayExceptionResponse`",
+    "description": "Version 1.56.1 Steps to reproduce returns Expected behavior HTTP 200 response, correct drivers are served. Actual behavior HTTP 400 response, GatewayExceptionResponse is returned. Additional context I can also reproduce this behavior in CI (GHA). Environment",
+    "repo": "playwright",
+    "correctAnswer": "bug",
+    "stats": {
+      "comments": 47,
+      "votes": 28
+    }
+  },
+  {
+    "id": 38109,
+    "title": "Test Agents MCP Tools Fail with Custom Fixtures Using test.extend<>()",
+    "description": "Version 1.56 Steps to reproduce Create a base fixture file that extends @playwright/test: Create a test file that uses the custom fixture: Verify the test works via CLI: ✅ Test executes successfully Attempt to use Test Agents MCP tools: Call test_list MCP tool → Tool hangs indefinitely (no timeout, no error) Call test_run MCP tool with the test fil...",
+    "repo": "playwright",
+    "correctAnswer": "bug",
+    "stats": {
+      "comments": 11,
+      "votes": 1
+    }
+  },
+  {
+    "id": 37749,
+    "title": "test.describe() error when using seed.spec.ts with Playwright Agents (v1.56)",
+    "description": "--- > [!IMPORTANT] > For those that are experiencing this issue: update to VS Code v1.105 before using Playwright Test Agents!!! --- Version 1.56 Steps to reproduce Install the latest Playwright v1.56. Initialize agents: npx playwright init-agents --loop=vscode This generates: planner.chatmode.md generator.chatmode.md healer.chatmode.md seed.spec.t...",
+    "repo": "playwright",
+    "correctAnswer": "bug",
+    "stats": {
+      "comments": 39,
+      "votes": 27
+    }
+  },
+  {
+    "id": 37597,
+    "title": "Cannot close a page after dismissing a beforeunload dialog",
+    "description": "Version 1.55.1 Steps to reproduce In my code, we conditionally trigger a beforeupload dialog depending on if the user has pending changes that they have not saved. So in my test I interact with the page and try to close without saving which correctly triggers the dialog. I then dismiss the dialog and trigger a save, and want to assert that the page...",
+    "repo": "playwright",
+    "correctAnswer": "bug",
+    "stats": {
+      "comments": 0,
+      "votes": 0
+    }
+  },
+  {
+    "id": 37003,
+    "title": "[Regression]: URL hostname match no longer case-insensitive",
+    "description": "Last Good Version 1.51.1 First Bad Version 1.52.0 Introduction In #34923, we changed urlMatches(baseURL, urlString, match) and introduced a potentially unwanted regression: it no longer treats the match URL's hostname case insensitively. This will now fail: Prior behaviour I've written the following test case, which passes against the urlMatch.ts i...",
+    "repo": "playwright",
+    "correctAnswer": "bug",
+    "stats": {
+      "comments": 0,
+      "votes": 0
+    }
+  },
+  {
+    "id": 36904,
+    "title": "Running webkit in archlinux WSL",
+    "description": "Version 1.54.2 Steps to reproduce Running the test with webkit Expected behavior should run succesfully Actual behavior Running 1 test using 1 worker 1) [webkit] › tests/saucedemo-logout.spec.ts:3:5 › Login and logout on saucedemo.com ───────────── Error: browserType.launch: Target page, context or browser has been closed Browser logs: <launching> ...",
+    "repo": "playwright",
+    "correctAnswer": "bug",
+    "stats": {
+      "comments": 11,
+      "votes": 16
+    }
+  },
+  {
+    "id": 36867,
+    "title": "Running long tests in Playwright causes memory usage to spike in UI mode",
+    "description": "Version 1.54 Steps to reproduce <img width=\"1506\" height=\"784\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/d8ae4618-973b-4b5d-ae56-b6b7638afcfd\" /> Run long test spanning multiple pages - multi page form - in UI mode Expected behavior Should run smoothly and no crash. Actual behavior Crashes, lags system, high memory usage. Addition...",
+    "repo": "playwright",
+    "correctAnswer": "bug",
+    "stats": {
+      "comments": 5,
+      "votes": 0
+    }
+  },
+  {
+    "id": 36759,
+    "title": "Locator cannot locate iframe correctly!!!",
+    "description": "Version 1.54.0 Steps to reproduce Expected behavior It can locate into correct iframe.Then I can evaluate in this frame. <img width=\"1887\" height=\"924\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/16dba808-137b-4c98-bff9-b80c925512d8\" /> Actual behavior But it located mian frame: <img width=\"1839\" height=\"960\" alt=\"Image\" src=\"https:...",
+    "repo": "playwright",
+    "correctAnswer": "bug",
+    "stats": {
+      "comments": 12,
+      "votes": 0
+    }
+  }
+]

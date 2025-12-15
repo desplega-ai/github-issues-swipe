@@ -27,6 +27,32 @@ export default function RootLayout({
     <html lang="en">
       <body className="antialiased">
         {children}
+
+        {/* Footer with Linear and Jira icons - Desktop only */}
+        <div className="hidden md:block fixed bottom-4 right-4 z-50">
+          <div className="flex gap-3">
+            <a
+              href="https://github.com/desplega-ai/github-issues-swipe/issues/1"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 rounded-lg border-2 border-gray-700 bg-gray-900/90 px-4 py-2 text-sm font-medium text-gray-300 backdrop-blur-sm transition-all hover:border-blue-500 hover:text-blue-400 hover:shadow-lg"
+              title="Vote for Linear Integration"
+            >
+              <img src="images/linear-light-logo.svg" alt="Linear Logo" className="h-5 w-5" />
+              <span>Linear</span>
+            </a>
+            <a
+              href="https://github.com/desplega-ai/github-issues-swipe/issues/2"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 rounded-lg border-2 border-gray-700 bg-gray-900/90 px-4 py-2 text-sm font-medium text-gray-300 backdrop-blur-sm transition-all hover:border-blue-500 hover:text-blue-400 hover:shadow-lg"
+              title="Vote for Jira Integration"
+            >
+              <img src="images/jira.png" alt="Jira Logo" className="h-5 w-5" />
+              <span>Jira</span>
+            </a>
+          </div>
+        </div>
       </body>
     </html>
   );

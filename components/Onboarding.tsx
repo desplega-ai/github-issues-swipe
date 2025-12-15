@@ -14,6 +14,7 @@ export function Onboarding() {
 
     const setUserToken = useIssuesStore((state) => state.setUserToken);
     const setRepo = useIssuesStore((state) => state.setRepo);
+    const setDemoMode = useIssuesStore((state) => state.setDemoMode);
 
     // Auto-load repos if token is pasted and has correct format
     useEffect(() => {
@@ -61,152 +62,171 @@ export function Onboarding() {
         }
     };
 
+    const handleDemoMode = () => {
+        setDemoMode(true);
+    };
+
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
-            <div className="w-full max-w-md overflow-hidden rounded-2xl border border-gray-800 bg-gray-900 shadow-xl">
-                {/* Header */}
-                <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-6 text-center">
-                    <h2 className="text-2xl font-bold text-white">Welcome!</h2>
-                    <p className="mt-2 text-blue-100">Let&apos;s get you started with GitHub Issues Swipe</p>
-                </div>
+        <div className="fixed inset-0 z-50 bg-gray-900/95 backdrop-blur-sm">
+            {/* Demo Banner - Top of page */}
+            <button
+                onClick={handleDemoMode}
+                className="w-full py-2 px-6 text-center text-sm font-semibold transition-colors hover:bg-blue-700 bg-blue-600 text-white"
+            >
+                🎮 TRY DEMO MODE - See how it works!
+            </button>
 
-                {/* Content */}
-                <div className="p-6">
-                    <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Modal Container */}
+            <div className="flex items-center justify-center min-h-[calc(100vh-40px)] p-4">
+                <div className="w-full max-w-md overflow-hidden rounded-2xl border border-gray-700 bg-gray-800 shadow-xl">
+                    {/* Header */}
+                    <div className="p-6 text-center bg-gray-800">
+                        <h2 className="text-2xl font-bold text-white">
+                            Welcome!
+                        </h2>
+                        <p className="mt-2 text-gray-400">
+                            Let&apos;s get you started with GitHub Issues Swipe
+                        </p>
+                    </div>
 
-                        {/* Input Group */}
-                        <div>
-                            <label htmlFor="token" className="mb-2 block text-sm font-medium text-gray-300">
-                                GitHub Personal Access Token
-                            </label>
-                            <div className="relative">
-                                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                                    <Key className="h-5 w-5 text-gray-500" />
+                    {/* Content */}
+                    <div className="p-6 bg-gray-800">
+                        <form onSubmit={handleSubmit} className="space-y-6">
+
+                            {/* Input Group */}
+                            <div>
+                                <label htmlFor="token" className="mb-2 block text-sm font-medium text-gray-300">
+                                    GitHub Personal Access Token
+                                </label>
+                                <div className="relative">
+                                    <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                                        <Key className="h-5 w-5 text-gray-500" />
+                                    </div>
+                                    <input
+                                        type="password"
+                                        id="token"
+                                        value={token}
+                                        onChange={(e) => {
+                                            setToken(e.target.value);
+                                            setError('');
+                                        }}
+                                        onBlur={() => { if (token) loadRepos(); }}
+                                        className="block w-full rounded-lg border border-gray-600 bg-gray-900 p-3 pl-10 text-white placeholder-gray-500 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm"
+                                        placeholder="ghp_..."
+                                        required
+                                    />
                                 </div>
-                                <input
-                                    type="password"
-                                    id="token"
-                                    value={token}
-                                    onChange={(e) => {
-                                        setToken(e.target.value);
-                                        setError('');
-                                    }}
-                                    onBlur={() => { if (token) loadRepos(); }}
-                                    className="block w-full rounded-lg border border-gray-700 bg-gray-800 p-3 pl-10 text-white placeholder-gray-500 focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                                    placeholder="ghp_..."
-                                    required
-                                />
-                            </div>
-                            <p className="mt-1 text-xs text-gray-500">Provide a token to load your repositories.</p>
-                            {error && <p className="mt-2 text-sm text-red-500">{error}</p>}
-                        </div>
-
-                        {/* Repository Input */}
-                        <div>
-                            <label htmlFor="repo" className="mb-2 block text-sm font-medium text-gray-300">
-                                Repository
-                            </label>
-                            <div className="flex gap-2">
-                                <div className="relative flex-1">
-                                    {loadingRepos ? (
-                                        <div className="absolute inset-y-0 left-0 flex items-center pl-3">
-                                            <RefreshCw className="h-5 w-5 animate-spin text-gray-400" />
-                                        </div>
-                                    ) : null}
-
-                                    {repos.length > 0 ? (
-                                        <select
-                                            id="repo"
-                                            value={repoUrl}
-                                            onChange={(e) => setRepoUrl(e.target.value)}
-                                            className={`w-full appearance-none rounded-lg border border-gray-700 bg-gray-800 p-3 text-white focus:border-blue-500 focus:outline-none ${loadingRepos ? 'pl-10' : ''}`}
-                                            required
-                                        >
-                                            <option value="">Select a repository...</option>
-                                            {repos.map((repo) => (
-                                                <option key={repo.id} value={repo.html_url}>
-                                                    {repo.full_name}
-                                                </option>
-                                            ))}
-                                            {repoUrl && !repos.some(r => r.html_url === repoUrl) && (
-                                                <option value={repoUrl}>{repoUrl} (Manual)</option>
-                                            )}
-                                        </select>
-                                    ) : (
-                                        <input
-                                            type="text"
-                                            id="repo"
-                                            value={repoUrl}
-                                            onChange={(e) => setRepoUrl(e.target.value)}
-                                            className={`block w-full rounded-lg border border-gray-700 bg-gray-800 p-3 text-white placeholder-gray-500 focus:border-blue-500 focus:ring-blue-500 sm:text-sm ${loadingRepos ? 'pl-10' : ''}`}
-                                            placeholder="https://github.com/owner/repo"
-                                            required
-                                        />
-                                    )}
-                                </div>
-                                <button
-                                    type="button"
-                                    onClick={loadRepos}
-                                    disabled={loadingRepos || !token}
-                                    className="flex items-center justify-center rounded-lg border border-gray-700 bg-gray-800 px-4 text-gray-300 hover:bg-gray-700 disabled:opacity-50"
-                                    title="Refresh Repositories"
-                                >
-                                    <RefreshCw className={`h-5 w-5 ${loadingRepos ? 'animate-spin' : ''}`} />
-                                </button>
+                                <p className="mt-1 text-xs text-gray-400">Provide a token to load your repositories.</p>
+                                {error && <p className="mt-2 text-sm text-red-400">{error}</p>}
                             </div>
 
-                            {repos.length > 0 && (
-                                <button
-                                    type="button"
-                                    onClick={() => setRepos([])}
-                                    className="mt-1 text-xs text-blue-400 hover:text-blue-300 hover:underline"
-                                >
-                                    Switch to manual URL input
-                                </button>
-                            )}
-                        </div>
+                            {/* Repository Input */}
+                            <div>
+                                <label htmlFor="repo" className="mb-2 block text-sm font-medium text-gray-300">
+                                    Repository
+                                </label>
+                                <div className="flex gap-2">
+                                    <div className="relative flex-1">
+                                        {loadingRepos ? (
+                                            <div className="absolute inset-y-0 left-0 flex items-center pl-3">
+                                                <RefreshCw className="h-5 w-5 animate-spin text-gray-500" />
+                                            </div>
+                                        ) : null}
 
-                        {/* Instructions */}
-                        <div className="space-y-3 rounded-lg bg-gray-800/50 p-4 text-sm text-gray-400">
-                            <h3 className="font-semibold text-gray-300">How to get a token:</h3>
-                            <ol className="list-decimal space-y-2 pl-4">
-                                <li>
-                                    Go to{' '}
-                                    <a
-                                        href="https://github.com/settings/tokens"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="inline-flex items-center text-blue-400 hover:text-blue-300 hover:underline"
+                                        {repos.length > 0 ? (
+                                            <select
+                                                id="repo"
+                                                value={repoUrl}
+                                                onChange={(e) => setRepoUrl(e.target.value)}
+                                                className={`w-full appearance-none rounded-lg border border-gray-600 bg-gray-900 p-3 text-white focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 ${loadingRepos ? 'pl-10' : ''}`}
+                                                required
+                                            >
+                                                <option value="">Select a repository...</option>
+                                                {repos.map((repo) => (
+                                                    <option key={repo.id} value={repo.html_url}>
+                                                        {repo.full_name}
+                                                    </option>
+                                                ))}
+                                                {repoUrl && !repos.some(r => r.html_url === repoUrl) && (
+                                                    <option value={repoUrl}>{repoUrl} (Manual)</option>
+                                                )}
+                                            </select>
+                                        ) : (
+                                            <input
+                                                type="text"
+                                                id="repo"
+                                                value={repoUrl}
+                                                onChange={(e) => setRepoUrl(e.target.value)}
+                                                className={`block w-full rounded-lg border border-gray-600 bg-gray-900 p-3 text-white placeholder-gray-500 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm ${loadingRepos ? 'pl-10' : ''}`}
+                                                placeholder="https://github.com/owner/repo"
+                                                required
+                                            />
+                                        )}
+                                    </div>
+                                    <button
+                                        type="button"
+                                        onClick={loadRepos}
+                                        disabled={loadingRepos || !token}
+                                        className="flex items-center justify-center rounded-lg border border-gray-600 bg-gray-900 px-4 text-gray-400 hover:bg-gray-800 hover:text-white disabled:opacity-50"
+                                        title="Refresh Repositories"
                                     >
-                                        GitHub Settings <ExternalLink className="ml-1 h-3 w-3" />
-                                    </a>
-                                </li>
-                                <li>Generate a new token (Classic or Fine-grained)</li>
-                                <li>
-                                    Select <code className="rounded bg-gray-800 px-1 py-0.5 text-xs text-blue-300">repo</code> scope (for private repos) or public_repo.
-                                </li>
-                            </ol>
-                        </div>
+                                        <RefreshCw className={`h-5 w-5 ${loadingRepos ? 'animate-spin' : ''}`} />
+                                    </button>
+                                </div>
 
-                        {/* Privacy Note */}
-                        <div className="flex items-start rounded-lg border border-blue-900/50 bg-blue-900/20 p-4">
-                            <Shield className="mt-0.5 mr-3 h-5 w-5 flex-shrink-0 text-blue-400" />
-                            <div className="text-sm text-blue-200">
-                                <p className="font-medium text-blue-100 mb-1">Privacy First</p>
-                                <p>
-                                    Your token is stored <strong>only in your browser&apos;s local storage</strong>.
-                                    We do not transmit it to our servers.
-                                </p>
+                                {repos.length > 0 && (
+                                    <button
+                                        type="button"
+                                        onClick={() => setRepos([])}
+                                        className="mt-1 text-xs text-gray-400 hover:text-gray-300 hover:underline"
+                                    >
+                                        Switch to manual URL input
+                                    </button>
+                                )}
                             </div>
-                        </div>
 
-                        <button
-                            type="submit"
-                            className="w-full rounded-lg bg-blue-600 px-4 py-3 font-semibold text-white transition-colors hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900"
-                        >
-                            Start Swiping
-                        </button>
-                    </form>
+                            {/* Instructions */}
+                            <div className="space-y-3 rounded-lg border border-gray-700 bg-gray-900 p-4 text-sm">
+                                <h3 className="font-semibold text-white">How to get a token:</h3>
+                                <ol className="list-decimal space-y-2 pl-4 text-gray-400">
+                                    <li>
+                                        Go to{' '}
+                                        <a
+                                            href="https://github.com/settings/tokens"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="inline-flex items-center text-blue-400 hover:text-blue-300 hover:underline"
+                                        >
+                                            GitHub Settings <ExternalLink className="ml-1 h-3 w-3" />
+                                        </a>
+                                    </li>
+                                    <li>Generate a new token (Classic or Fine-grained)</li>
+                                    <li>
+                                        Select <code className="rounded bg-gray-800 px-1 py-0.5 text-xs text-gray-300">repo</code> scope (for private repos) or public_repo.
+                                    </li>
+                                </ol>
+                            </div>
+
+                            {/* Privacy Note */}
+                            <div className="flex items-start rounded-lg border border-gray-700 bg-gray-900 p-4">
+                                <Shield className="mt-0.5 mr-3 h-5 w-5 flex-shrink-0 text-gray-400" />
+                                <div className="text-sm text-gray-400">
+                                    <p className="font-medium mb-1 text-white">Privacy First</p>
+                                    <p>
+                                        Your token is stored <strong>only in your browser&apos;s local storage</strong>.
+                                        We do not transmit it to our servers.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <button
+                                type="submit"
+                                className="w-full rounded-lg bg-blue-600 px-4 py-3 font-semibold text-white transition-colors hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-800"
+                            >
+                                Start Swiping
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

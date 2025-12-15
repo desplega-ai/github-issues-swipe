@@ -20,6 +20,7 @@ interface IssuesState {
   loading: boolean;
   error: string | null;
   settings: Settings;
+  isDemoMode: boolean;
 
   // Actions
   setUserToken: (token: string) => void;
@@ -33,6 +34,7 @@ interface IssuesState {
   reset: () => void;
   getCurrentIssue: () => GitHubIssue | null;
   updateSettings: (settings: Partial<Settings>) => void;
+  setDemoMode: (isDemoMode: boolean) => void;
 }
 
 export const useIssuesStore = create<IssuesState>()(
@@ -46,6 +48,7 @@ export const useIssuesStore = create<IssuesState>()(
       swipeHistory: [],
       loading: false,
       error: null,
+      isDemoMode: false,
       settings: {
         swipeLeftLabel: 'later',
         swipeRightLabel: null,
@@ -112,6 +115,13 @@ export const useIssuesStore = create<IssuesState>()(
       updateSettings: (newSettings) => set((state) => ({
         settings: { ...state.settings, ...newSettings }
       })),
+
+      setDemoMode: (isDemoMode) => set({
+        isDemoMode,
+        issues: [],
+        currentIndex: 0,
+        swipeHistory: [],
+      }),
     }),
     {
       name: 'github-issues-storage',
