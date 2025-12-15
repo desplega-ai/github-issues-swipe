@@ -36,8 +36,8 @@ export function Onboarding() {
             if (fetchedRepos.length === 0) {
                 // Maybe show message but don't error?
             }
-        } catch (e) {
-            console.error("Failed to load repos", e);
+        } catch {
+            console.error("Failed to load repos");
             // Don't block flow, maybe token is invalid but we'll catch that on submit or user notices
         } finally {
             setLoadingRepos(false);
@@ -57,7 +57,7 @@ export function Onboarding() {
             const { owner, repo } = parseRepositoryUrl(repoUrl);
             setUserToken(token.trim());
             setRepo(owner, repo);
-        } catch (err) {
+        } catch {
             setError('Invalid repository URL. Please use format: https://github.com/owner/repo');
         }
     };

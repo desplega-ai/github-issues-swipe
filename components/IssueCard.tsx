@@ -5,7 +5,6 @@ import { motion, useMotionValue, useTransform, PanInfo, useAnimation } from 'fra
 import { ExternalLink, Calendar, Tag, MessageSquare, ThumbsUp, ListTodo, X } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import rehypeRaw from 'rehype-raw';
 import type { GitHubIssue } from '@/types';
 
 interface IssueCardProps {

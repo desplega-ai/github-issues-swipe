@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useIssuesStore } from '@/store/useIssuesStore';
 import { fetchRepoLabels, fetchUserRepos, parseRepositoryUrl } from '@/lib/github';
 import { X, Save, RefreshCw } from 'lucide-react';
@@ -17,7 +17,6 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
     const [labels, setLabels] = useState<Label[]>([]);
     const [repos, setRepos] = useState<Repo[]>([]);
     const [settings, setSettings] = useState(store.settings);
-    const [loadingLabels, setLoadingLabels] = useState(false);
     const [loadingRepos, setLoadingRepos] = useState(false);
     const [error, setError] = useState('');
 
@@ -33,36 +32,20 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
         }
     }, [isOpen, store.userToken, store.repoOwner, store.repoName, store.settings]);
 
-    // Initial load of labels if we have credentials
-    // Also load repos if token is present
-    useEffect(() => {
-        if (isOpen && token) {
-            if (repoUrl) loadLabels();
-            if (repos.length === 0) loadRepos();
-        }
-    }, [isOpen]);
-
-    // Reload labels when repoUrl changes
-    useEffect(() => {
-        if (isOpen && token && repoUrl) {
-            loadLabels();
-        }
-    }, [repoUrl]);
-
-    const loadRepos = async () => {
+    const loadRepos = useCallback(async () => {
         if (!token) return;
         setLoadingRepos(true);
         try {
             const fetchedRepos = await fetchUserRepos(token);
             setRepos(fetchedRepos);
-        } catch (e) {
-            console.error("Failed to load repos", e);
+        } catch {
+            console.error("Failed to load repos");
         } finally {
             setLoadingRepos(false);
         }
-    };
+    }, [token]);
 
-    const loadLabels = async () => {
+    const loadLabels = useCallback(async () => {
         if (!token) return;
 
         let owner, repo;
@@ -70,20 +53,34 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
             const parsed = parseRepositoryUrl(repoUrl);
             owner = parsed.owner;
             repo = parsed.repo;
-        } catch (e) {
+        } catch {
             return; // Don't try loading if invalid repo url
         }
 
-        setLoadingLabels(true);
         try {
             const fetchedLabels = await fetchRepoLabels(token, owner, repo);
             setLabels(fetchedLabels);
-        } catch (e) {
-            console.error("Failed to load labels", e);
-        } finally {
-            setLoadingLabels(false);
+        } catch {
+            console.error("Failed to load labels");
         }
-    };
+    }, [token, repoUrl]);
+
+    // Initial load of labels if we have credentials
+    // Also load repos if token is present
+    useEffect(() => {
+        if (isOpen && token) {
+            if (repoUrl) loadLabels();
+            if (repos.length === 0) loadRepos();
+        }
+    }, [isOpen, token, repoUrl, repos.length, loadLabels, loadRepos]);
+
+    // Reload labels when repoUrl changes
+    useEffect(() => {
+        if (isOpen && token && repoUrl) {
+            loadLabels();
+        }
+    }, [isOpen, token, repoUrl, loadLabels]);
+
 
     const handleSave = () => {
         setError('');
@@ -98,7 +95,7 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
             const parsed = parseRepositoryUrl(repoUrl);
             owner = parsed.owner;
             repo = parsed.repo;
-        } catch (e) {
+        } catch {
             setError('Invalid Repository URL');
             return;
         }

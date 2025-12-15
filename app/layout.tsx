@@ -38,6 +38,7 @@ export default function RootLayout({
               className="flex items-center gap-2 rounded-lg border-2 border-gray-700 bg-gray-900/90 px-4 py-2 text-sm font-medium text-gray-300 backdrop-blur-sm transition-all hover:border-blue-500 hover:text-blue-400 hover:shadow-lg"
               title="Vote for Linear Integration"
             >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="images/linear-light-logo.svg" alt="Linear Logo" className="h-5 w-5" />
               <span>Linear</span>
             </a>
@@ -48,6 +49,7 @@ export default function RootLayout({
               className="flex items-center gap-2 rounded-lg border-2 border-gray-700 bg-gray-900/90 px-4 py-2 text-sm font-medium text-gray-300 backdrop-blur-sm transition-all hover:border-blue-500 hover:text-blue-400 hover:shadow-lg"
               title="Vote for Jira Integration"
             >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="images/jira.png" alt="Jira Logo" className="h-5 w-5" />
               <span>Jira</span>
             </a>

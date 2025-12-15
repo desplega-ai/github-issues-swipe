@@ -32,6 +32,7 @@ export interface GitHubIssue {
     rocket: number;
     eyes: number;
   };
+  correctAnswer?: 'left' | 'right' | 'up';
 }
 
 export type SwipeDirection = 'left' | 'right' | 'up' | 'down';

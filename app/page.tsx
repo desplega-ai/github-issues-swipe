@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { useEffect, useState, useCallback } from 'react';
+import { AnimatePresence } from 'framer-motion';
 import { useIssuesStore } from '@/store/useIssuesStore';
 import { IssueCard } from '@/components/IssueCard';
 import { SwipeControls } from '@/components/SwipeControls';
@@ -12,11 +12,11 @@ import {
   assignIssueToMe,
   closeIssueWithWontfix,
   markIssueForLater,
-  parseRepositoryUrl,
   unassignIssue,
   reopenIssue,
   removeIssueLabel,
 } from '@/lib/github';
+import type { GitHubIssue } from '@/types';
 import { Loader2, CheckCircle2, Settings, Sparkles, RefreshCw } from 'lucide-react';
 
 export default function Home() {
@@ -45,7 +45,7 @@ export default function Home() {
   const [showSettings, setShowSettings] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
   const [showMeme, setShowMeme] = useState<string | null>(null);
-  const [pendingSwipe, setPendingSwipe] = useState<{ direction: 'left' | 'right' | 'up' | 'down', issue: any } | null>(null);
+  const [pendingSwipe, setPendingSwipe] = useState<{ direction: 'left' | 'right' | 'up' | 'down', issue: GitHubIssue } | null>(null);
 
   // List of all meme files in the directory
   const memeFiles = [
@@ -79,7 +79,7 @@ export default function Home() {
   };
 
   // Helper function to show meme and handle swipe in demo mode
-  const handleDemoSwipe = (direction: 'left' | 'right' | 'up' | 'down', issue: any) => {
+  const handleDemoSwipe = (direction: 'left' | 'right' | 'up' | 'down', issue: GitHubIssue) => {
     // 35% chance to show a meme
     if (Math.random() < 0.37) {
       setPendingSwipe({ direction, issue });
@@ -110,51 +110,7 @@ export default function Home() {
   const currentIssue = getCurrentIssue();
   const isComplete = currentIndex >= issues.length && issues.length > 0;
 
-  // Load demo issues when demo mode is activated
-  useEffect(() => {
-    if (isDemoMode) {
-      loadDemoIssues();
-    }
-  }, [isDemoMode]);
-
-  // Load issues on mount or when token changes
-  useEffect(() => {
-    if (userToken && !isDemoMode) {
-      loadIssues();
-    }
-  }, [userToken, repoOwner, repoName]); // reload if repo changes too
-
-  // Keyboard controls
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (processing || !currentIssue || (!userToken && !isDemoMode) || showSettings || showCelebration || showMeme) return;
-
-      switch (e.key) {
-        case 'ArrowLeft':
-          handleSwipeLeft();
-          break;
-        case 'ArrowRight':
-          handleSwipeRight();
-          break;
-        case 'ArrowUp':
-          e.preventDefault(); // Prevent page scroll
-          handleSwipeUp();
-          break;
-        case 'z':
-        case 'Z':
-          if (e.ctrlKey || e.metaKey) {
-            e.preventDefault();
-            handleUndo();
-          }
-          break;
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [currentIssue, processing, userToken, showSettings, showCelebration]);
-
-  async function loadDemoIssues() {
+  const loadDemoIssues = useCallback(async () => {
     try {
       // Load issues from public/issues.json
       const response = await fetch('/issues.json');
@@ -169,7 +125,7 @@ export default function Home() {
       const sample = shuffled.slice(0, 20);
       
       // Map to GitHubIssue format
-      const demoIssues = sample.map((issue: any) => {
+      const demoIssues = sample.map((issue: { id: number; title: string; description?: string; repo?: string; correctAnswer?: string; stats?: { comments?: number; votes?: number } }): GitHubIssue => {
         // Map correctAnswer to swipe direction
         let swipeDirection: 'left' | 'right' | 'up' = 'left';
         if (issue.correctAnswer === 'bug') {
@@ -219,9 +175,16 @@ export default function Home() {
       console.error('Error loading demo issues:', err);
       setError('Failed to load demo issues');
     }
-  }
+  }, [setIssues, setError]);
 
-  async function loadIssues() {
+  // Load demo issues when demo mode is activated
+  useEffect(() => {
+    if (isDemoMode) {
+      loadDemoIssues();
+    }
+  }, [isDemoMode, loadDemoIssues]);
+
+  const loadIssues = useCallback(async () => {
     if (!userToken || !repoOwner || !repoName) return;
 
     setLoading(true);
@@ -247,17 +210,16 @@ export default function Home() {
     } finally {
       setLoading(false);
     }
-  }
+  }, [userToken, repoOwner, repoName, settings.skipIssuesWithSwipeLeftLabel, settings.swipeLeftLabel, setIssues, setLoading, setError]);
 
-  // Refresh issues if settings change
+  // Load issues on mount or when token changes
   useEffect(() => {
-    if (userToken && !loading && issues.length > 0) {
-      // Logic for refreshing if needed
+    if (userToken && !isDemoMode) {
+      loadIssues();
     }
-  }, [settings.skipIssuesWithSwipeLeftLabel, settings.swipeLeftLabel]);
+  }, [userToken, repoOwner, repoName, isDemoMode, loadIssues]);
 
-
-  async function handleSwipeLeft() {
+  const handleSwipeLeft = useCallback(async () => {
     if (!currentIssue || processing || showMeme) return;
 
     // Demo mode - show meme on every swipe
@@ -279,9 +241,9 @@ export default function Home() {
         console.error('Error marking issue for later:', err);
         // TODO: Add toast notification for errors
       });
-  }
+  }, [currentIssue, processing, showMeme, isDemoMode, handleDemoSwipe, userToken, repoOwner, repoName, recordSwipe, nextIssue, settings.swipeLeftLabel]);
 
-  async function handleSwipeRight() {
+  const handleSwipeRight = useCallback(async () => {
     if (!currentIssue || processing || showMeme) return;
 
     // Demo mode - show meme on every swipe
@@ -302,9 +264,9 @@ export default function Home() {
       .catch((err) => {
         console.error('Error assigning issue:', err);
       });
-  }
+  }, [currentIssue, processing, showMeme, isDemoMode, handleDemoSwipe, userToken, repoOwner, repoName, recordSwipe, nextIssue, settings.swipeRightLabel]);
 
-  async function handleSwipeUp() {
+  const handleSwipeUp = useCallback(async () => {
     if (!currentIssue || processing || showMeme) return;
 
     // Demo mode - show meme on every swipe
@@ -325,23 +287,9 @@ export default function Home() {
       .catch((err) => {
         console.error('Error closing issue:', err);
       });
-  }
+  }, [currentIssue, processing, showMeme, isDemoMode, handleDemoSwipe, userToken, repoOwner, repoName, recordSwipe, nextIssue, settings.swipeUpLabel]);
 
-  async function handleSwipeDown() {
-    if (!currentIssue || processing || showMeme) return;
-
-    // Demo mode - show meme on every swipe
-    if (isDemoMode) {
-      handleDemoSwipe('down', currentIssue);
-      return;
-    }
-
-    // Just skip, no GitHub API call needed
-    recordSwipe('down', currentIssue);
-    nextIssue();
-  }
-
-  async function handleUndo() {
+  const handleUndo = useCallback(async () => {
     if (swipeHistory.length === 0 || processing) return;
 
     // In demo mode, just undo without API calls
@@ -376,7 +324,63 @@ export default function Home() {
     } finally {
       setProcessing(false);
     }
+  }, [swipeHistory, processing, isDemoMode, undo, userToken, repoOwner, repoName, settings.swipeLeftLabel, settings.swipeRightLabel, settings.swipeUpLabel]);
+
+  // Keyboard controls
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (processing || !currentIssue || (!userToken && !isDemoMode) || showSettings || showCelebration || showMeme) return;
+
+      switch (e.key) {
+        case 'ArrowLeft':
+          handleSwipeLeft();
+          break;
+        case 'ArrowRight':
+          handleSwipeRight();
+          break;
+        case 'ArrowUp':
+          e.preventDefault(); // Prevent page scroll
+          handleSwipeUp();
+          break;
+        case 'z':
+        case 'Z':
+          if (e.ctrlKey || e.metaKey) {
+            e.preventDefault();
+            handleUndo();
+          }
+          break;
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [currentIssue, processing, userToken, isDemoMode, showSettings, showCelebration, showMeme, handleSwipeLeft, handleSwipeRight, handleSwipeUp, handleUndo]);
+
+
+
+  // Refresh issues if settings change
+  useEffect(() => {
+    if (userToken && !loading && issues.length > 0 && !isDemoMode) {
+      // Logic for refreshing if needed
+    }
+  }, [settings.skipIssuesWithSwipeLeftLabel, settings.swipeLeftLabel, userToken, loading, issues.length, isDemoMode]);
+
+
+
+  async function handleSwipeDown() {
+    if (!currentIssue || processing || showMeme) return;
+
+    // Demo mode - show meme on every swipe
+    if (isDemoMode) {
+      handleDemoSwipe('down', currentIssue);
+      return;
+    }
+
+    // Just skip, no GitHub API call needed
+    recordSwipe('down', currentIssue);
+    nextIssue();
   }
+
 
   // Prevent hydration mismatch
   if (!isClient) return null;
@@ -388,6 +392,7 @@ export default function Home() {
         <div className="mx-auto max-w-4xl px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="/images/desplega-logo.svg" alt="Desplega Logo" className="h-8 w-8" />
               <h1 className="text-2xl font-bold text-white">GitHub Issues Swipe</h1>
             </div>
@@ -552,6 +557,7 @@ export default function Home() {
                   }}
                 >
                   <div className="text-center w-full h-[500px] flex items-center justify-center px-4">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={showMeme}
                       alt="Meme"
