@@ -89,7 +89,7 @@ export default function Home() {
         recordSwipe(direction, issue);
         nextIssue();
         setPendingSwipe(null);
-      }, 2000); // Show meme for 2 seconds
+      }, 5000); // Show meme for 5 seconds
     } else {
       // No meme, just proceed normally
       recordSwipe(direction, issue);
@@ -117,13 +117,13 @@ export default function Home() {
       if (!response.ok) {
         throw new Error('Failed to load demo issues');
       }
-      
+
       const rawIssues = await response.json();
-      
+
       // Get random sample of 20 issues
       const shuffled = [...rawIssues].sort(() => Math.random() - 0.5);
       const sample = shuffled.slice(0, 20);
-      
+
       // Map to GitHubIssue format
       const demoIssues = sample.map((issue: { id: number; title: string; description?: string; repo?: string; correctAnswer?: string; stats?: { comments?: number; votes?: number } }): GitHubIssue => {
         // Map correctAnswer to swipe direction
@@ -137,7 +137,7 @@ export default function Home() {
         } else {
           swipeDirection = 'left'; // Default to left
         }
-        
+
         return {
           id: issue.id,
           number: issue.id,
@@ -169,7 +169,7 @@ export default function Home() {
           correctAnswer: swipeDirection,
         };
       });
-      
+
       setIssues(demoIssues);
     } catch (err) {
       console.error('Error loading demo issues:', err);
@@ -547,7 +547,7 @@ export default function Home() {
 
               {/* Meme Overlay - Show on every swipe in demo mode */}
               {showMeme && pendingSwipe && (
-                <div 
+                <div
                   className="fixed inset-0 flex items-center justify-center bg-black/90 backdrop-blur-md z-[100] cursor-pointer"
                   onClick={() => {
                     setShowMeme(null);
