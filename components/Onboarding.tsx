@@ -213,8 +213,8 @@ export function Onboarding() {
                                 <div className="text-sm text-gray-400">
                                     <p className="font-medium mb-1 text-white">Privacy First</p>
                                     <p>
-                                        Your token is stored <strong>only in your browser&apos;s local storage</strong>.
-                                        We do not transmit it to our servers.
+                                        Everything is stored <strong>only in your browser&apos;s local storage</strong>.
+                                        We do not transmit/store anything to our servers (no token, no issues, etc).
                                     </p>
                                 </div>
                             </div>
